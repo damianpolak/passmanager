@@ -28,16 +28,25 @@ namespace PasswordManager
         {
             InitializeComponent();
             appManagement = new Management();
-            //dataBase = new DataBase();
             listDataBase = new List<DataBase>();
 
-            /*
-            List<Item> items = new List<Item>();
-            items.Add(new Item() { Name = "John Doe", Login = "login1", Password = "john@doe-family.com" });
-            items.Add(new Item() { Name = "Jane Doe", Login = "login2", Password = "jane@doe-family.com" });
-            items.Add(new Item() { Name = "Sammy Doe", Login = "login3", Password = "sammy.doe@gmail.com" });
-            listViewPasswords.ItemsSource = items;
-            */
+            DataBase db1 = new DataBase();
+            db1.Name = "test1";
+            db1.Login = "login1";
+            db1.Password = "password1";
+
+            DataBase db2 = new DataBase();
+            db2.Name = "test2";
+            db2.Login = "logitest2";
+            db2.Password = "password2";
+
+            listViewPasswords.Items.Add(db1);
+            listViewPasswords.Items.Add(db2);
+            listDataBase.Add(db1);
+            listDataBase.Add(db2);
+
+            
+
 
         }
 
@@ -54,7 +63,13 @@ namespace PasswordManager
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            NewWindow newWindow = new NewWindow();
+            
+            
+            if(newWindow.ShowDialog() == true)
+            {
+                
+            } 
         }
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -97,7 +112,6 @@ namespace PasswordManager
             
             if(addWindow.ShowDialog() == true)
             {
-
                 listDataBase.Add(new DataBase()
                 {
                     Name = addWindow.tbName.Text,
@@ -107,9 +121,53 @@ namespace PasswordManager
                     Description = addWindow.tbDescription.Text
                 });
                 listViewPasswords.Items.Add(listDataBase.Last<DataBase>());
-                //listViewPasswords.Items.Add(new Item { Name = addWindow.tbName.Text, Login = addWindow.tbLogin.Text });
             }
             
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            if(listViewPasswords.SelectedItem != null)
+            {
+                AddWindow editWindow = new AddWindow();
+                editWindow.btAdd.Content = "Save";
+                DataBase db = (DataBase)listViewPasswords.SelectedItem;
+                editWindow.Title = "Edit [" + db.Name + "]";
+                editWindow.tbName.Text = db.Name;
+                editWindow.tbLogin.Text = db.Login;
+                editWindow.tbPassword.Text = db.Password;
+                editWindow.tbLink.Text = db.Link;
+                editWindow.tbDescription.Text = db.Description;
+
+                if (editWindow.ShowDialog() == true)
+                {
+                    //MessageBox.Show(listDataBase.Find(x => x.Name == db.Name).Name);
+                    listDataBase[listDataBase.FindIndex(x => x.Name == db.Name)].Name = editWindow.tbName.Text;
+                    listDataBase[listDataBase.FindIndex(x => x.Name == db.Name)].Password = editWindow.tbPassword.Text;
+                    listDataBase[listDataBase.FindIndex(x => x.Name == db.Name)].Login = editWindow.tbLogin.Text;
+                    listDataBase[listDataBase.FindIndex(x => x.Name == db.Name)].Link = editWindow.tbLink.Text;
+                    listDataBase[listDataBase.FindIndex(x => x.Name == db.Name)].Description = editWindow.tbDescription.Text;
+
+                    ((DataBase)listViewPasswords.Items[listViewPasswords.SelectedIndex]).Name = editWindow.tbName.Text;
+                    ((DataBase)listViewPasswords.Items[listViewPasswords.SelectedIndex]).Login = editWindow.tbLogin.Text;
+                    ((DataBase)listViewPasswords.Items[listViewPasswords.SelectedIndex]).Password = editWindow.tbPassword.Text;
+                    ((DataBase)listViewPasswords.Items[listViewPasswords.SelectedIndex]).Link = editWindow.tbLink.Text;
+                    ((DataBase)listViewPasswords.Items[listViewPasswords.SelectedIndex]).Description = editWindow.tbDescription.Text;
+
+                    listViewPasswords.Items.Refresh();
+                }
+
+            }
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            if (listViewPasswords.SelectedItem != null)
+            {
+                DataBase db = (DataBase)listViewPasswords.SelectedItem;
+                listViewPasswords.Items.RemoveAt(listViewPasswords.SelectedIndex);
+                listDataBase.RemoveAt(listDataBase.FindIndex(x => x.Name == db.Name));
+            }
         }
     }
 }

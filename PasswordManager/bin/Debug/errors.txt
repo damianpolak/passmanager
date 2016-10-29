@@ -1,0 +1,2 @@
+MSG 29-10-16 (23:13:47) : [DialogResult można ustawić tylko po utworzeniu elementu typu Window i jego wyświetleniu jako okna dialogowego.]
+

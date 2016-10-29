@@ -15,19 +15,19 @@
             <MenuItem Header="_FILE">
                 <MenuItem Header="_NEW..." Click="MenuItem_Click" />
                 <MenuItem Header="_OPEN..." />
-                <MenuItem Header="_SAVE" />
-                <MenuItem Header="_SAVE AS..." />
+                <MenuItem Header="_SAVE" IsEnabled="False"/>
+                <MenuItem Header="_SAVE AS..." IsEnabled="False"/>
                 <Separator />
                 <MenuItem Header="_EXIT" />
             </MenuItem>
             <MenuItem Header="_DATA">
-                <MenuItem Header="_ADD..." Click="MenuItem_Click_1" />
-                <MenuItem Header="_EDIT..." />
-                <MenuItem Header="_REMOVE" />
+                <MenuItem Header="_ADD..." Click="MenuItem_Click_1" IsEnabled="False"/>
+                <MenuItem Header="_EDIT..." Click="MenuItem_Click_2" IsEnabled="False"/>
+                <MenuItem Header="_REMOVE" Click="MenuItem_Click_3" IsEnabled="False"/>
                 <Separator />
                 <MenuItem Header="_PREFERENCES" />
             </MenuItem>
-            <MenuItem Header="_LANGUAGES">
+            <MenuItem Header="_LANGUAGES" IsEnabled="False">
                 <MenuItem Header="_ENGLISH" />
                 <MenuItem Header="_POLISH" />
             </MenuItem>
@@ -37,7 +37,7 @@
         </Menu>
 
 
-        <ListView x:Name="listViewPasswords" Margin="0,26,0,0" Background="#FFF3F3F3" BorderBrush="#FF8B1E1E">
+        <ListView x:Name="listViewPasswords" Margin="0,26,0,0" Background="#FFF3F3F3" BorderBrush="#FF8B1E1E" Visibility="Hidden">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="BorderBrush" Value="LightGray" />
