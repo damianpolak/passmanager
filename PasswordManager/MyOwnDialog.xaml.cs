@@ -33,5 +33,13 @@ namespace PasswordManager
         {
             DialogResult = false;
         }
+
+        private void MetroWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                btnFirst_Click(sender, e);
+            }
+        }
     }
 }

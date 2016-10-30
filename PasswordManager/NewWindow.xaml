@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:PasswordManager"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Create and encrypt file" Height="234.494" Width="264.873" ShowMinButton="False" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" BorderBrush="Black" Loaded="MetroWindow_Loaded">
+        Title="Create and encrypt file" Height="234.494" Width="264.873" ShowMinButton="False" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" BorderBrush="Black" Loaded="MetroWindow_Loaded" IsWindowDraggable="False">
     <Grid Background="#FFF3F3F3">
         <Label x:Name="label" Content="Enter your password" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy" Content="(min 8 characters):" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top" FontSize="9.333"/>
-        <TextBox x:Name="tbPassword" HorizontalAlignment="Left" Height="23" Margin="10,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236"/>
+        <TextBox x:Name="tbPassword" HorizontalAlignment="Left" Height="23" Margin="10,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" PreviewKeyDown="tbPassword_PreviewKeyDown"/>
         <Button x:Name="tbGenerate" Content="Generate password" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="236"/>
         <Button x:Name="btDone" Content="Done" HorizontalAlignment="Left" Margin="38,132,0,0" VerticalAlignment="Top" Width="75" Click="btDone_Click"/>
         <Button x:Name="btCancel" Content="Cancel" HorizontalAlignment="Left" Margin="139,132,0,0" VerticalAlignment="Top" Width="75" Click="btCancel_Click"/>

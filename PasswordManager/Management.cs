@@ -42,10 +42,20 @@ namespace PasswordManager
                     bSettingsAvailable = false;
                     appLogs.Message(ex.Message.ToString());
                 }
-                
             }
         }
 
+        public void RemoveEmptyFile()
+        {
+            if(appVariables.sActualFilePath != null)
+            {
+                if (new FileInfo(appVariables.sActualFilePath).Length == 0)
+                {
+                    File.Delete(appVariables.sActualFilePath);
+                }
+            }
+
+        }
         public Settings GetSettings()
         {
             if(bSettingsAvailable == true)
@@ -111,12 +121,21 @@ namespace PasswordManager
 
         public List<DataBase> Deserialize(string sFilePath)
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(List<DataBase>));
-            TextReader reader = new StreamReader(sFilePath);
-            object obj = deserializer.Deserialize(reader);
-            List<DataBase> XmlData = (List<DataBase>)obj;
-            reader.Close();
-            return XmlData;
+            try
+            {
+                XmlSerializer deserializer = new XmlSerializer(typeof(List<DataBase>));
+                TextReader reader = new StreamReader(sFilePath);
+                object obj = deserializer.Deserialize(reader);
+                List<DataBase> XmlData = (List<DataBase>)obj;
+                reader.Close();
+                return XmlData;
+            }
+            catch(Exception ex)
+            {
+                appLogs.Message(ex.Message + " [DESERIALIZATION ERROR]");
+                return null;
+            }
+
         }
 
         // Rijandael
@@ -152,29 +171,41 @@ namespace PasswordManager
                 throw new ArgumentNullException("cipherText");
 
             if (!IsBase64String(cipherText))
-                throw new Exception("The cipherText input parameter is not base64 encoded");
+            {
+                appLogs.Message("The cipherText input parameter is not base64 encoded");
+                return "FileIsCorrupt";
+            }
+                
 
             string text;
-
-            var aesAlg = NewRijndaelManaged(salt);
-            var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-            var cipher = Convert.FromBase64String(cipherText);
-
-            using (var msDecrypt = new MemoryStream(cipher))
+            try
             {
-                using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                var aesAlg = NewRijndaelManaged(salt);
+                var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                var cipher = Convert.FromBase64String(cipherText);
+                using (var msDecrypt = new MemoryStream(cipher))
                 {
-                    using (var srDecrypt = new StreamReader(csDecrypt))
+                    using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {
-                        text = srDecrypt.ReadToEnd();
+                        using (var srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            text = srDecrypt.ReadToEnd();
+                        }
                     }
                 }
             }
+            catch(Exception ex)
+            {
+                appLogs.Message(ex.Message + "[KEY IS INVALID]");
+                return "KeyIsInvalid";
+            }
+
             return text;
         }
 
         private RijndaelManaged NewRijndaelManaged(string salt)
         {
+
             if (salt == null) throw new ArgumentNullException("salt");
             var saltBytes = Encoding.ASCII.GetBytes(salt);
             var key = new Rfc2898DeriveBytes(sInputKey, saltBytes);
@@ -184,6 +215,41 @@ namespace PasswordManager
             aesAlg.IV = key.GetBytes(aesAlg.BlockSize / 8);
 
             return aesAlg;
+
+        }
+
+        public static bool ShowDialog(MainWindow mainWindow, string sTitle, string sBtnFirst, string sBtnSecond, string sLabel)
+        {
+            MyOwnDialog dialog = new MyOwnDialog();
+            dialog.Owner = mainWindow;
+            dialog.Title = sTitle;
+            dialog.btnFirst.Content = sBtnFirst;
+            dialog.btnSecond.Content = sBtnSecond;
+            dialog.mainLabel.Content = sLabel;
+
+            if (dialog.ShowDialog() == true)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool ShowDialog(NewWindow newWindow, string sTitle, string sBtnFirst, string sBtnSecond, string sLabel)
+        {
+            MyOwnDialog dialog = new MyOwnDialog();
+            dialog.Owner = newWindow;
+            dialog.Title = sTitle;
+            dialog.btnFirst.Content = sBtnFirst;
+            dialog.btnSecond.Content = sBtnSecond;
+            dialog.mainLabel.Content = sLabel;
+
+            if (dialog.ShowDialog() == true)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

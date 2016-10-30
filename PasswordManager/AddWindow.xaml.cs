@@ -26,6 +26,7 @@ namespace PasswordManager
             InitializeComponent();
 
             appLogs = new Logs();
+            tbName.Focus();
         }
 
         private void btCancel_Click(object sender, RoutedEventArgs e)
@@ -43,6 +44,14 @@ namespace PasswordManager
             catch (Exception ex)
             {
                 appLogs.Message(ex.Message);
+            }
+        }
+
+        private void MetroWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                btAdd_Click(sender, e);
             }
         }
     }

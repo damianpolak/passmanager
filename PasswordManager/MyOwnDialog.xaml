@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:PasswordManager"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="MyOwnDialog" Height="240.59" Width="318.376" BorderBrush="Black" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" IsMinButtonEnabled="False" ShowMinButton="False" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="MyOwnDialog" Height="240.59" Width="318.376" BorderBrush="Black" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" IsMinButtonEnabled="False" ShowMinButton="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsWindowDraggable="False" PreviewKeyDown="MetroWindow_PreviewKeyDown">
     <Grid Background="#FFF3F3F3">
-        <Label x:Name="mainLabel" Content="Label" Margin="11,45,10,0" VerticalAlignment="Top" Background="{x:Null}" HorizontalContentAlignment="Center" Height="53"/>
+        <Label x:Name="mainLabel" Content="Label" Margin="11,45,10,0" VerticalAlignment="Top" Background="{x:Null}" HorizontalContentAlignment="Center" Height="53" FontSize="14.667"/>
         <Button x:Name="btnFirst" Content="Button" HorizontalAlignment="Left" Margin="59,0,0,57" Width="75" Height="25" VerticalAlignment="Bottom" Click="btnFirst_Click"/>
         <Button x:Name="btnSecond" Content="Button" HorizontalAlignment="Left" Margin="172,130,0,0" VerticalAlignment="Top" Width="75" Click="btnSecond_Click"/>
 

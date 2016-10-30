@@ -25,7 +25,7 @@ namespace PasswordManager
         private Management appManagement;
         private List<DataBase> listDataBase;
         private string passwordToEncode;
-
+        
         private bool bIsActiveDocument = false;
         private bool bMadeChanges = false;
 
@@ -37,8 +37,8 @@ namespace PasswordManager
             appManagement = new Management();
             listDataBase = new List<DataBase>();
 
-            tc = new TestConsole();
-            tc.Show();
+            //tc = new TestConsole();
+            //tc.Show();
             /*
             DataBase db1 = new DataBase();
             db1.Name = "test1";
@@ -55,7 +55,9 @@ namespace PasswordManager
             listDataBase.Add(db1);
             listDataBase.Add(db2);
             */
-            
+
+            System.Windows.Forms.NotifyIcon tray = new System.Windows.Forms.NotifyIcon();
+            tray.Visible = true;
 
 
         }
@@ -97,7 +99,7 @@ namespace PasswordManager
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             NewWindow newWindow = new NewWindow();
-            
+            newWindow.Owner = this;
             
             if(newWindow.ShowDialog() == true)
             {
@@ -113,6 +115,14 @@ namespace PasswordManager
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if(bMadeChanges == true)
+            {
+                SaveToFileDialog();
+            } else
+            {
+                appManagement.RemoveEmptyFile();
+            }
+            
             Settings appSettings = new Settings();
             appSettings.mainTop = this.Top;
             appSettings.mainLeft = this.Left;
@@ -148,7 +158,7 @@ namespace PasswordManager
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
             AddWindow addWindow = new AddWindow();
-            
+            addWindow.Owner = this;
             if(addWindow.ShowDialog() == true)
             {
                 listDataBase.Add(new DataBase()
@@ -217,24 +227,20 @@ namespace PasswordManager
         private void miExit_Click(object sender, RoutedEventArgs e)
         {
 
-            if(bMadeChanges != false)
+            if(bMadeChanges == false)
             {
                 Application.Current.Shutdown();
             } else
             {
                 SaveToFileDialog();
+                Application.Current.Shutdown();
             }
             
         }
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
         {
-            MyOwnDialog own = new MyOwnDialog();
-            own.Title = "Are you sure?";
-            own.btnFirst.Content = "ok";
-            own.btnSecond.Content = "cancel";
-            own.mainLabel.Content = "Do you want to exit application without saving?";
-            own.ShowDialog();
+            //Management.ShowDialog(this);
         }
 
         private void miSave_Click(object sender, RoutedEventArgs e)
@@ -257,15 +263,45 @@ namespace PasswordManager
                 if (ofd.ShowDialog() == true)
                 {
                     appManagement.appVariables.sActualFilePath = ofd.FileName;
-                    listViewPasswords.Visibility = Visibility.Visible;
-                    EnableControls();
-                    listDataBase = man.Deserialize(appManagement.appVariables.sActualFilePath);
-                    listViewPasswords.Items.Clear();
-                    foreach (DataBase item in listDataBase)
+
+                    OpenFile of = new OpenFile();
+                    of.Owner = this;
+                    if(of.ShowDialog() == true)
                     {
-                        listViewPasswords.Items.Add(item);
+                        passwordToEncode = of.tbPassword.Text;
+                        appManagement.sInputKey = passwordToEncode;
+
+                        string sReadFile = appManagement.DecryptRijndael(File.ReadAllText(
+                        appManagement.appVariables.sActualFilePath), appManagement.appVariables.sSalt);
+                        switch(sReadFile)
+                        {
+                            case "KeyIsInvalid":
+                                Management.ShowDialog(this, "Information", "Ok", "Cancel",
+                                    "Key file is invalid! Please try again!");
+                                break;
+                            case "FileIsCorrupt":
+                                Management.ShowDialog(this, "Information", "Ok", "Cancel",
+                                    "File is corrupted!");
+                                break;
+
+                            default:
+                                File.WriteAllText(appManagement.appVariables.sActualFilePath + ".temp", sReadFile);
+
+                                listDataBase = man.Deserialize(appManagement.appVariables.sActualFilePath + ".temp");
+                                File.Delete(appManagement.appVariables.sActualFilePath + ".temp");
+                                listViewPasswords.Visibility = Visibility.Visible;
+                                EnableControls();
+                                listViewPasswords.Items.Clear();
+                                foreach (DataBase item in listDataBase)
+                                {
+                                    listViewPasswords.Items.Add(item);
+                                }
+                                listViewPasswords.Items.Refresh();
+                                break;
+                        }
+
                     }
-                    listViewPasswords.Items.Refresh();
+
                 }
 
 
@@ -279,13 +315,9 @@ namespace PasswordManager
 
         public void SaveToFileDialog()
         {
-            MyOwnDialog dialog = new MyOwnDialog();
-            dialog.Title = "Question";
-            dialog.btnFirst.Content = "Yes";
-            dialog.btnSecond.Content = "No";
-            dialog.mainLabel.Content = "Do you want to save changes?";
 
-            if (dialog.ShowDialog() == true)
+            if (Management.ShowDialog(this, "Question", "Yes", "No", 
+                "Do you want to save changes?") == true)
             {
                 SaveToFile();
             }
@@ -294,6 +326,11 @@ namespace PasswordManager
         {
             Management man = new Management();
             man.Serialize(listDataBase, appManagement.appVariables.sActualFilePath);
+            man.sInputKey = passwordToEncode;
+            string sReadFile = man.EncryptRijndael(File.ReadAllText(appManagement.appVariables.sActualFilePath), appManagement.appVariables.sSalt);
+            File.Delete(appManagement.appVariables.sActualFilePath);
+            File.WriteAllText(appManagement.appVariables.sActualFilePath, sReadFile);
+            bMadeChanges = false;
         }
 
         private void miSaveAs_Click(object sender, RoutedEventArgs e)
@@ -307,10 +344,7 @@ namespace PasswordManager
             {
                 if (sv.ShowDialog() == true)
                 {
-                    if(new FileInfo(appManagement.appVariables.sActualFilePath).Length == 0)
-                    {
-                        File.Delete(appManagement.appVariables.sActualFilePath);
-                    }
+                    appManagement.RemoveEmptyFile();
                     appManagement.appVariables.sActualFilePath = sv.FileName;
                     SaveToFile();
                 }

@@ -44,6 +44,18 @@
                     <Setter Property="BorderThickness" Value="0,0,0,1" />
                 </Style>
             </ListView.ItemContainerStyle>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <ContextMenu.ItemsSource>
+                        <CompositeCollection>
+                            <MenuItem Header="Add new item" />
+                            <MenuItem Header="Edit" />
+                            <MenuItem Header="Remove" />
+                            
+                        </CompositeCollection>
+                    </ContextMenu.ItemsSource>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
                     <GridViewColumn x:Name="columnName" Header="Name" Width="60" DisplayMemberBinding="{Binding Name}" />

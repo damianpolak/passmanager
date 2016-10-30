@@ -31,15 +31,24 @@ namespace PasswordManager
         {
             InitializeComponent();
             appLogs = new Logs();
-          
 
+            tbPassword.Focus();
         }
 
         private void btDone_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                DialogResult = true;
+                if(tbPassword.Text.Length > 7)
+                {
+                    DialogResult = true;
+                } else
+                {
+
+                    Management.ShowDialog(this, "Information", "Ok", "Cancel",
+                        "Password is too short! Minimum length is 8 characters.");
+                }
+                
             } catch(Exception ex)
             {
                 appLogs.Message(ex.Message);
@@ -73,6 +82,14 @@ namespace PasswordManager
                 appLogs.Message(ex.Message);
             }
 
+        }
+
+        private void tbPassword_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btDone_Click(sender, e);
+            }
         }
     }
 }
