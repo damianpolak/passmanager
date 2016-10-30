@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PasswordManager"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="PasswordManager" Height="350" Width="525" Background="#FF494949" Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded" BorderBrush="#FF3A3A3A">
+        Title="Password Manager" Height="350" Width="525" Background="#FF494949" Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded" BorderBrush="#FF3A3A3A">
     <Grid Background="#FFB4B4B4" >
         <Label x:Name="label_Copy" Content="Created by Damian Polak" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label" Content="Password Manager" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top"/>
@@ -14,9 +14,9 @@
 
             <MenuItem Header="_FILE">
                 <MenuItem x:Name="miNew" Header="_NEW..." Click="MenuItem_Click" />
-                <MenuItem x:Name="miOpen" Header="_OPEN..." />
-                <MenuItem x:Name="miSave" Header="_SAVE" IsEnabled="False"/>
-                <MenuItem x:Name="miSaveAs" Header="_SAVE AS..." IsEnabled="False"/>
+                <MenuItem x:Name="miOpen" Header="_OPEN..." Click="miOpen_Click" />
+                <MenuItem x:Name="miSave" Header="_SAVE" IsEnabled="False" Click="miSave_Click"/>
+                <MenuItem x:Name="miSaveAs" Header="_SAVE AS..." IsEnabled="False" Click="miSaveAs_Click"/>
                 <Separator />
                 <MenuItem x:Name="miExit" Header="_EXIT" Click="miExit_Click" />
             </MenuItem>

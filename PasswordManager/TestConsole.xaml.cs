@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using System.Text;
 
 namespace PasswordManager
 {
@@ -27,15 +29,21 @@ namespace PasswordManager
         {
             Management man = new Management();
             man.sInputKey = "mojehaslo";
-            tbConsole.Text = man.EncryptRijndael(tbConsole2.Text, "1234567890");
+            tbConsole.Text = man.EncryptRijndael(File.ReadAllText(@"C:\Users\dpolak\Desktop\settings.bin"), "1234567890");
+            StreamReader sr = new StreamReader(@"C:\Users\dpolak\Desktop\file.xml");
+            tbConsole.Text = man.EncryptRijndael(sr.ReadToEnd(), "1234567890");
+            sr.Close();
         }
 
         private void btDecrypt_Click(object sender, RoutedEventArgs e)
         {
             Management man = new Management();
             man.sInputKey = "mojehaslo";
-            //tbConsole2.Text = man.DecryptRijndael(tbConsole.Text, "1234567890");
-            MessageBox.Show(man.DecryptRijndael(tbConsole.Text, "1234567890"));
+            tbConsole2.Text = man.DecryptRijndael(tbConsole.Text, "1234567890");
+            StreamWriter sw = new StreamWriter(@"C:\Users\dpolak\Desktop\file.xml2");
+            sw.Write(tbConsole2.Text);
+            sw.Close();
+
         }
     }
 }

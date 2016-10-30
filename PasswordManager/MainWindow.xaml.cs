@@ -11,7 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using MahApps.Metro.Controls;
+using System.IO;
 
 namespace PasswordManager
 {
@@ -27,13 +29,15 @@ namespace PasswordManager
         private bool bIsActiveDocument = false;
         private bool bMadeChanges = false;
 
+        // TEST
+        TestConsole tc;
         public MainWindow()
         {
             InitializeComponent();
             appManagement = new Management();
             listDataBase = new List<DataBase>();
 
-            TestConsole tc = new TestConsole();
+            tc = new TestConsole();
             tc.Show();
             /*
             DataBase db1 = new DataBase();
@@ -103,6 +107,7 @@ namespace PasswordManager
                 listViewPasswords.Visibility = Visibility.Visible;
                 ClearAll();
                 EnableControls();
+                appManagement.appVariables.sActualFilePath = newWindow.sInputDir;
             } 
         }
 
@@ -154,7 +159,9 @@ namespace PasswordManager
                     Link = addWindow.tbLink.Text,
                     Description = addWindow.tbDescription.Text
                 });
+                //listViewPasswords.c
                 listViewPasswords.Items.Add(listDataBase.Last<DataBase>());
+                
                 bMadeChanges = true;
             }
             
@@ -212,9 +219,12 @@ namespace PasswordManager
 
             if(bMadeChanges != false)
             {
-
+                Application.Current.Shutdown();
+            } else
+            {
+                SaveToFileDialog();
             }
-            Application.Current.Shutdown();
+            
         }
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
@@ -227,5 +237,92 @@ namespace PasswordManager
             own.ShowDialog();
         }
 
+        private void miSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveToFile();
+
+        }
+
+        private void miOpen_Click(object sender, RoutedEventArgs e)
+        {
+            if(bMadeChanges != true)
+            {
+                Management man = new Management();
+
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.Filter = "Password Manager Files (*.psm)|*.psm";
+                ofd.DefaultExt = "psm";
+                ofd.AddExtension = true;
+
+                if (ofd.ShowDialog() == true)
+                {
+                    appManagement.appVariables.sActualFilePath = ofd.FileName;
+                    listViewPasswords.Visibility = Visibility.Visible;
+                    EnableControls();
+                    listDataBase = man.Deserialize(appManagement.appVariables.sActualFilePath);
+                    listViewPasswords.Items.Clear();
+                    foreach (DataBase item in listDataBase)
+                    {
+                        listViewPasswords.Items.Add(item);
+                    }
+                    listViewPasswords.Items.Refresh();
+                }
+
+
+            } else
+            {
+                SaveToFileDialog();
+            }
+
+            
+        }
+
+        public void SaveToFileDialog()
+        {
+            MyOwnDialog dialog = new MyOwnDialog();
+            dialog.Title = "Question";
+            dialog.btnFirst.Content = "Yes";
+            dialog.btnSecond.Content = "No";
+            dialog.mainLabel.Content = "Do you want to save changes?";
+
+            if (dialog.ShowDialog() == true)
+            {
+                SaveToFile();
+            }
+        }
+        public void SaveToFile()
+        {
+            Management man = new Management();
+            man.Serialize(listDataBase, appManagement.appVariables.sActualFilePath);
+        }
+
+        private void miSaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog sv = new SaveFileDialog();
+            sv.Filter = "Password Manager Files (*.psm)|*.psm";
+            sv.DefaultExt = "psm";
+            sv.AddExtension = true;
+
+            try
+            {
+                if (sv.ShowDialog() == true)
+                {
+                    if(new FileInfo(appManagement.appVariables.sActualFilePath).Length == 0)
+                    {
+                        File.Delete(appManagement.appVariables.sActualFilePath);
+                    }
+                    appManagement.appVariables.sActualFilePath = sv.FileName;
+                    SaveToFile();
+                }
+                else
+                {
+                    DialogResult = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                appManagement.appLogs.Message(ex.Message);
+            }
+        }
     }
 }

@@ -1,2 +1,22 @@
 MSG 29-10-16 (23:13:47) : [DialogResult można ustawić tylko po utworzeniu elementu typu Window i jego wyświetleniu jako okna dialogowego.]
 
+MSG 30-10-16 (12:32:48) : [Proces nie może uzyskać dostępu do pliku „C:\Users\dpolak\AppData\Local\PasswordManager\settings.bin”, ponieważ jest on używany przez inny proces.]
+
+MSG 30-10-16 (12:32:56) : [Proces nie może uzyskać dostępu do pliku „C:\Users\dpolak\AppData\Local\PasswordManager\settings.bin”, ponieważ jest on używany przez inny proces.]
+
+MSG 30-10-16 (12:33:00) : [Proces nie może uzyskać dostępu do pliku „C:\Users\dpolak\AppData\Local\PasswordManager\settings.bin”, ponieważ jest on używany przez inny proces.]
+
+MSG 30-10-16 (12:33:02) : [Proces nie może uzyskać dostępu do pliku „C:\Users\dpolak\AppData\Local\PasswordManager\settings.bin”, ponieważ jest on używany przez inny proces.]
+
+MSG 30-10-16 (12:33:05) : [Proces nie może uzyskać dostępu do pliku „C:\Users\dpolak\AppData\Local\PasswordManager\settings.bin”, ponieważ jest on używany przez inny proces.]
+
+MSG 30-10-16 (12:33:08) : [Proces nie może uzyskać dostępu do pliku „C:\Users\dpolak\AppData\Local\PasswordManager\settings.bin”, ponieważ jest on używany przez inny proces.]
+
+MSG 30-10-16 (12:33:12) : [Proces nie może uzyskać dostępu do pliku „C:\Users\dpolak\AppData\Local\PasswordManager\settings.bin”, ponieważ jest on używany przez inny proces.]
+
+MSG 30-10-16 (12:33:18) : [Proces nie może uzyskać dostępu do pliku „C:\Users\dpolak\AppData\Local\PasswordManager\settings.bin”, ponieważ jest on używany przez inny proces.]
+
+MSG 30-10-16 (12:33:22) : [Proces nie może uzyskać dostępu do pliku „C:\Users\dpolak\AppData\Local\PasswordManager\settings.bin”, ponieważ jest on używany przez inny proces.]
+
+MSG 30-10-16 (12:33:23) : [Proces nie może uzyskać dostępu do pliku „C:\Users\dpolak\AppData\Local\PasswordManager\settings.bin”, ponieważ jest on używany przez inny proces.]
+

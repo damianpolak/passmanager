@@ -6,7 +6,7 @@ using System.Text;
 namespace PasswordManager
 {
     [Serializable()]
-    class DataBase
+    public class DataBase
     {
         public string Name { get; set; }
         public string Login { get; set; }

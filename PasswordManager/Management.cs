@@ -6,14 +6,16 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace PasswordManager
 {
     class Management
     {
         private Settings appSettings;
-        private Variables appVariables;
-        private Logs appLogs;
+        public Variables appVariables;
+        public Logs appLogs;
         private bool bSettingsAvailable;
         public string sInputKey { get; set; }
 
@@ -88,6 +90,33 @@ namespace PasswordManager
             {
                 appLogs.Message(e.Message);
             }
+        }
+
+        public void Serialize(List<DataBase> list, string sFilePath)
+        {
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<DataBase>));
+                using (TextWriter writer = new StreamWriter(sFilePath))
+                {
+                    serializer.Serialize(writer, list);
+                }
+            }
+            catch(Exception ex)
+            {
+                appLogs.Message(ex.Message);
+            }
+
+        }
+
+        public List<DataBase> Deserialize(string sFilePath)
+        {
+            XmlSerializer deserializer = new XmlSerializer(typeof(List<DataBase>));
+            TextReader reader = new StreamReader(sFilePath);
+            object obj = deserializer.Deserialize(reader);
+            List<DataBase> XmlData = (List<DataBase>)obj;
+            reader.Close();
+            return XmlData;
         }
 
         // Rijandael

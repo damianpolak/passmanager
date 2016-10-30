@@ -9,6 +9,7 @@ namespace PasswordManager
     {
         public string sSettingsFileDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData) + "\\PasswordManager\\";
         public string sSettingsFilePath;
+        public string sActualFilePath;
 
         public Variables()
         {

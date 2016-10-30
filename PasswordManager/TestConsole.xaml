@@ -8,9 +8,9 @@
         Title="TestConsole" Height="506.962" Width="613.291">
     <Grid>
         <TextBox x:Name="tbConsole" HorizontalAlignment="Left" Height="324" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="585" AcceptsReturn="True"/>
-        <TextBox x:Name="tbConsole2" HorizontalAlignment="Left" Height="23" Margin="10,348,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="585"/>
-        <Button x:Name="btEncrypt" Content="Encrypt" HorizontalAlignment="Left" Margin="10,395,0,0" VerticalAlignment="Top" Width="75" Click="btEncrypt_Click"/>
-        <Button x:Name="btDecrypt" Content="Decrypt" HorizontalAlignment="Left" Margin="123,395,0,0" VerticalAlignment="Top" Width="75" Click="btDecrypt_Click"/>
+        <TextBox x:Name="tbConsole2" HorizontalAlignment="Left" Height="77" Margin="10,348,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="585" AcceptsReturn="True"/>
+        <Button x:Name="btEncrypt" Content="Encrypt" HorizontalAlignment="Left" Margin="10,441,0,0" VerticalAlignment="Top" Width="75" Click="btEncrypt_Click"/>
+        <Button x:Name="btDecrypt" Content="Decrypt" HorizontalAlignment="Left" Margin="119,441,0,0" VerticalAlignment="Top" Width="75" Click="btDecrypt_Click"/>
 
     </Grid>
 </Window>
