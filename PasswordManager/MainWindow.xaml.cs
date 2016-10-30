@@ -21,8 +21,11 @@ namespace PasswordManager
     public partial class MainWindow : MetroWindow
     {
         private Management appManagement;
-        private DataBase dataBase;
         private List<DataBase> listDataBase;
+        private string passwordToEncode;
+
+        private bool bIsActiveDocument = false;
+        private bool bMadeChanges = false;
 
         public MainWindow()
         {
@@ -30,6 +33,9 @@ namespace PasswordManager
             appManagement = new Management();
             listDataBase = new List<DataBase>();
 
+            TestConsole tc = new TestConsole();
+            tc.Show();
+            /*
             DataBase db1 = new DataBase();
             db1.Name = "test1";
             db1.Login = "login1";
@@ -44,12 +50,35 @@ namespace PasswordManager
             listViewPasswords.Items.Add(db2);
             listDataBase.Add(db1);
             listDataBase.Add(db2);
-
+            */
             
 
 
         }
 
+        private void ClearAll()
+        {
+            listViewPasswords.Items.Clear();
+            listDataBase.Clear();
+        }
+
+        private void EnableControls()
+        {
+            miAdd.IsEnabled = true;
+            miEdit.IsEnabled = true;
+            miRemove.IsEnabled = true;
+            miSave.IsEnabled = true;
+            miSaveAs.IsEnabled = true;
+        }
+
+        private void DisableControls()
+        {
+            miAdd.IsEnabled = false;
+            miEdit.IsEnabled = false;
+            miRemove.IsEnabled = false;
+            miSaveAs.IsEnabled = false;
+            miSave.IsEnabled = false;
+        }
         public class Item
         {
             public string Name { get; set; }
@@ -68,7 +97,12 @@ namespace PasswordManager
             
             if(newWindow.ShowDialog() == true)
             {
+                bIsActiveDocument = true;
                 
+                passwordToEncode = newWindow.tbPassword.Text;
+                listViewPasswords.Visibility = Visibility.Visible;
+                ClearAll();
+                EnableControls();
             } 
         }
 
@@ -121,6 +155,7 @@ namespace PasswordManager
                     Description = addWindow.tbDescription.Text
                 });
                 listViewPasswords.Items.Add(listDataBase.Last<DataBase>());
+                bMadeChanges = true;
             }
             
         }
@@ -155,6 +190,7 @@ namespace PasswordManager
                     ((DataBase)listViewPasswords.Items[listViewPasswords.SelectedIndex]).Description = editWindow.tbDescription.Text;
 
                     listViewPasswords.Items.Refresh();
+                    bMadeChanges = true;
                 }
 
             }
@@ -167,7 +203,29 @@ namespace PasswordManager
                 DataBase db = (DataBase)listViewPasswords.SelectedItem;
                 listViewPasswords.Items.RemoveAt(listViewPasswords.SelectedIndex);
                 listDataBase.RemoveAt(listDataBase.FindIndex(x => x.Name == db.Name));
+                bMadeChanges = true;
             }
         }
+
+        private void miExit_Click(object sender, RoutedEventArgs e)
+        {
+
+            if(bMadeChanges != false)
+            {
+
+            }
+            Application.Current.Shutdown();
+        }
+
+        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        {
+            MyOwnDialog own = new MyOwnDialog();
+            own.Title = "Are you sure?";
+            own.btnFirst.Content = "ok";
+            own.btnSecond.Content = "cancel";
+            own.mainLabel.Content = "Do you want to exit application without saving?";
+            own.ShowDialog();
+        }
+
     }
 }

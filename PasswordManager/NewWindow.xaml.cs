@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Security.Cryptography;
 using System.IO;
+using Microsoft.Win32;
 
 using MahApps.Metro.Controls;
 
@@ -24,7 +25,7 @@ namespace PasswordManager
     {
         private Logs appLogs;
 
-        public string pwd;
+        public string sPassword;
         public string sInputDir;
         public NewWindow()
         {
@@ -52,25 +53,26 @@ namespace PasswordManager
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            /*
-            System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
-
+            SaveFileDialog sv = new SaveFileDialog();
+            sv.Filter = "Password Manager Files (*.psm)|*.psm";
+            sv.DefaultExt = "psm";
+            sv.AddExtension = true;
+            
             try
             {
-                if (fbd.ShowDialog().ToString().Equals("OK"))
+                if(sv.ShowDialog() == true)
                 {
-                    sInputDir = fbd.SelectedPath;
-                    //File.Create(sInputDir + "")
-                }
-                else
+                    sInputDir = sv.FileName;
+                    File.WriteAllText(sv.FileName, "");
+                } else
                 {
                     DialogResult = false;
                 }
-            }
-            catch (Exception ex)
+            } catch(Exception ex)
             {
                 appLogs.Message(ex.Message);
-            } */
+            }
+
         }
     }
 }

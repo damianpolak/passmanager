@@ -13,26 +13,26 @@
         <Menu x:Name="topMenu" Height="26" VerticalAlignment="Top" FontSize="12">
 
             <MenuItem Header="_FILE">
-                <MenuItem Header="_NEW..." Click="MenuItem_Click" />
-                <MenuItem Header="_OPEN..." />
-                <MenuItem Header="_SAVE" IsEnabled="False"/>
-                <MenuItem Header="_SAVE AS..." IsEnabled="False"/>
+                <MenuItem x:Name="miNew" Header="_NEW..." Click="MenuItem_Click" />
+                <MenuItem x:Name="miOpen" Header="_OPEN..." />
+                <MenuItem x:Name="miSave" Header="_SAVE" IsEnabled="False"/>
+                <MenuItem x:Name="miSaveAs" Header="_SAVE AS..." IsEnabled="False"/>
                 <Separator />
-                <MenuItem Header="_EXIT" />
+                <MenuItem x:Name="miExit" Header="_EXIT" Click="miExit_Click" />
             </MenuItem>
             <MenuItem Header="_DATA">
-                <MenuItem Header="_ADD..." Click="MenuItem_Click_1" IsEnabled="False"/>
-                <MenuItem Header="_EDIT..." Click="MenuItem_Click_2" IsEnabled="False"/>
-                <MenuItem Header="_REMOVE" Click="MenuItem_Click_3" IsEnabled="False"/>
+                <MenuItem x:Name="miAdd" Header="_ADD..." Click="MenuItem_Click_1" IsEnabled="False"/>
+                <MenuItem x:Name="miEdit" Header="_EDIT..." Click="MenuItem_Click_2" IsEnabled="False"/>
+                <MenuItem x:Name="miRemove" Header="_REMOVE" Click="MenuItem_Click_3" IsEnabled="False"/>
                 <Separator />
-                <MenuItem Header="_PREFERENCES" />
+                <MenuItem x:Name="miPreferences" Header="_PREFERENCES" />
             </MenuItem>
             <MenuItem Header="_LANGUAGES" IsEnabled="False">
                 <MenuItem Header="_ENGLISH" />
                 <MenuItem Header="_POLISH" />
             </MenuItem>
             <MenuItem Header="_HELP">
-                <MenuItem Header="_ABOUT" />
+                <MenuItem Header="_ABOUT" Click="MenuItem_Click_4" />
             </MenuItem>
         </Menu>
 
