@@ -18,5 +18,14 @@ namespace PasswordManager
         public double columnPasswordWidth;
         public double columnLinkWidth;
         public double columnDescriptionWidth;
+        public double columnLastChangesWidth;
+        public double columnCategoryWidth;
+        public double gcd1;
+        public double gcd2;
+        public double gcd3;
+        public double grd1;
+        public double grd2;
+        public double grd3;
+        public double grd4;
     }
 }

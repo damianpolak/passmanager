@@ -19,7 +19,6 @@ namespace PasswordManager
     /// </summary>
     public partial class AddWindow : MetroWindow
     {
-        public string[] values;
         private Logs appLogs;
         public AddWindow()
         {
@@ -38,7 +37,6 @@ namespace PasswordManager
         {
             try
             {
-                values = new string[] { tbName.Text, tbLogin.Text, tbPassword.Text, tbLink.Text, tbDescription.Text};
                 DialogResult = true;
             }
             catch (Exception ex)
@@ -51,7 +49,11 @@ namespace PasswordManager
         {
             if(e.Key == Key.Enter)
             {
-                btAdd_Click(sender, e);
+                if(tbDescription.Focusable != true)
+                {
+                    btAdd_Click(sender, e);
+                }
+                
             }
         }
     }

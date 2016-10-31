@@ -225,7 +225,7 @@ namespace PasswordManager
             dialog.Title = sTitle;
             dialog.btnFirst.Content = sBtnFirst;
             dialog.btnSecond.Content = sBtnSecond;
-            dialog.mainLabel.Content = sLabel;
+            dialog.mainLabel.Text = sLabel;
 
             if (dialog.ShowDialog() == true)
             {
@@ -242,7 +242,7 @@ namespace PasswordManager
             dialog.Title = sTitle;
             dialog.btnFirst.Content = sBtnFirst;
             dialog.btnSecond.Content = sBtnSecond;
-            dialog.mainLabel.Content = sLabel;
+            dialog.mainLabel.Text = sLabel;
 
             if (dialog.ShowDialog() == true)
             {
@@ -251,5 +251,6 @@ namespace PasswordManager
 
             return false;
         }
+
     }
 }

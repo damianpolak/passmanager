@@ -6,20 +6,22 @@
         xmlns:local="clr-namespace:PasswordManager"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Add new item" Height="340.822" Width="446.203" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" ShowMinButton="False" IsMinButtonEnabled="False" BorderBrush="#FF3A3A3A" PreviewKeyDown="MetroWindow_PreviewKeyDown" IsWindowDraggable="False">
+        Title="Add New Item" Height="346.721" Width="441.615" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" ShowMinButton="False" IsMinButtonEnabled="False" BorderBrush="#FF3A3A3A" PreviewKeyDown="MetroWindow_PreviewKeyDown" IsWindowDraggable="False">
     <Grid Background="#FFF3F3F3" Margin="0,0,2,0">
-        <Label x:Name="label" Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="137"/>
+        <Label x:Name="label" Content="Title" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="137"/>
         <TextBox x:Name="tbName" HorizontalAlignment="Left" Height="23" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173"/>
-        <Label x:Name="label_Copy" Content="Login" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Width="137"/>
+        <Label x:Name="label_Copy" Content="User Name" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Width="137"/>
         <TextBox x:Name="tbLogin" HorizontalAlignment="Left" Height="23" Margin="10,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173"/>
         <Label x:Name="label_Copy1" Content="Password" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="137"/>
         <TextBox x:Name="tbPassword" HorizontalAlignment="Left" Height="23" Margin="10,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173"/>
-        <Label x:Name="label_Copy2" Content="Link" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top" Width="137"/>
+        <Label x:Name="label_Copy2" Content="URL" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top" Width="137"/>
         <TextBox x:Name="tbLink" HorizontalAlignment="Left" Height="23" Margin="10,209,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173"/>
         <Label x:Name="label_Copy3" Content="Description" HorizontalAlignment="Left" Margin="196,10,0,0" VerticalAlignment="Top" Width="137"/>
         <TextBox x:Name="tbDescription" HorizontalAlignment="Left" Height="199" Margin="196,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" AcceptsReturn="True"/>
-        <Button x:Name="btAdd" Content="Add" HorizontalAlignment="Left" Margin="258,262,0,0" VerticalAlignment="Top" Width="75" Click="btAdd_Click"/>
-        <Button x:Name="btCancel" Content="Cancel" HorizontalAlignment="Left" Margin="345,262,0,0" VerticalAlignment="Top" Width="75" Click="btCancel_Click"/>
+        <Button x:Name="btAdd" Content="OK" HorizontalAlignment="Left" Margin="243,270,0,0" VerticalAlignment="Top" Width="75" Click="btAdd_Click"/>
+        <Button x:Name="btCancel" Content="Cancel" HorizontalAlignment="Left" Margin="345,270,0,0" VerticalAlignment="Top" Width="75" Click="btCancel_Click"/>
+        <ComboBox x:Name="cbCategory" HorizontalAlignment="Left" Margin="10,267,0,0" VerticalAlignment="Top" Width="173" IsEditable="True"/>
+        <Label x:Name="label_Copy4" Content="Category" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="137"/>
 
     </Grid>
 </Controls:MetroWindow>

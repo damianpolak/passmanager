@@ -33,10 +33,11 @@ namespace PasswordManager
             } else
             {
                 MyOwnDialog own = new MyOwnDialog();
+                own.Owner = this;
                 own.Title = "Information";
                 own.btnFirst.Content = "Ok";
                 own.btnSecond.Content = "Cancel";
-                own.mainLabel.Content = "Password is too short! Minimum length is 8 characters.";
+                own.mainLabel.Text = "Password is too short! Minimum length is 8 characters.";
                 own.ShowDialog();
             }
             

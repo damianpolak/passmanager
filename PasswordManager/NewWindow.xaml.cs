@@ -39,20 +39,30 @@ namespace PasswordManager
         {
             try
             {
-                if(tbPassword.Text.Length > 7)
+                if(tbPassword.Password.Length > 7)
                 {
-                    DialogResult = true;
+                    if(tbPasswordR.Password == tbPassword.Password)
+                    {
+                        DialogResult = true;
+                    } else
+                    {
+                        Management.ShowDialog(this, "Information", "Ok", "Cancel",
+                           "Validation error! Password and repeated password aren't identical!");
+                    }
+                    
                 } else
                 {
-
                     Management.ShowDialog(this, "Information", "Ok", "Cancel",
                         "Password is too short! Minimum length is 8 characters.");
                 }
+
+
                 
             } catch(Exception ex)
             {
                 appLogs.Message(ex.Message);
             }
+
         }
 
         private void btCancel_Click(object sender, RoutedEventArgs e)
@@ -63,6 +73,7 @@ namespace PasswordManager
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sv = new SaveFileDialog();
+            
             sv.Filter = "Password Manager Files (*.psm)|*.psm";
             sv.DefaultExt = "psm";
             sv.AddExtension = true;
@@ -91,5 +102,29 @@ namespace PasswordManager
                 btDone_Click(sender, e);
             }
         }
+
+        private void tbPassword_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            ValidatePasswords();
+        }
+
+        private void tbPasswordR_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            ValidatePasswords();
+        }
+
+        private void ValidatePasswords()
+        {
+            if (tbPassword.Password != tbPasswordR.Password)
+            {
+                tbPasswordR.Background = Brushes.LightCoral;
+            }
+            else
+            {
+                tbPasswordR.Background = Brushes.LightGreen;
+            }
+        }
+
+
     }
 }

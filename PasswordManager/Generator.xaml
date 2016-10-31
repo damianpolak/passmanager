@@ -6,8 +6,18 @@
         xmlns:local="clr-namespace:PasswordManager"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Generator" Height="300" Width="300">
+        Title="Password Generator" Height="392" Width="417" BorderBrush="Black" ResizeMode="NoResize" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" IsMinButtonEnabled="False" ShowMinButton="False">
     <Grid>
-        
+
+        <CheckBox x:Name="cbAlpha" Content="ABCDE...XYZ" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="96"/>
+        <CheckBox x:Name="cbNumbers" Content="1234567890" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="96"/>
+        <CheckBox x:Name="cbSpecChar" Content="!@#$%^&amp;*(_+)&quot;:&gt;&lt;?" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="135"/>
+        <CheckBox x:Name="cbMd5" Content="md5" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" Width="135"/>
+        <CheckBox x:Name="cbUpperCase" Content="Upper-case (abcd)" HorizontalAlignment="Left" Margin="175,10,0,0" VerticalAlignment="Top" Width="135"/>
+        <CheckBox x:Name="cbLowerCase" Content="Lower-case (ABCD)" HorizontalAlignment="Left" Margin="175,33,0,0" VerticalAlignment="Top" Width="135"/>
+        <Label x:Name="label" Content="Length of generated password:" HorizontalAlignment="Left" Margin="175,51,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbLength" HorizontalAlignment="Left" Height="23" Margin="354,51,0,0" TextWrapping="Wrap" Text="8" VerticalAlignment="Top" Width="36"/>
+        <TextBox x:Name="tbPreview" HorizontalAlignment="Left" Height="163" Margin="10,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" AcceptsReturn="True"/>
+        <Button x:Name="btGenerate" Content="Generate" HorizontalAlignment="Left" Margin="160,302,0,0" VerticalAlignment="Top" Width="78" Click="btGenerate_Click"/>
     </Grid>
 </Controls:MetroWindow>
