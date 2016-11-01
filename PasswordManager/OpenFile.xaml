@@ -6,16 +6,13 @@
         xmlns:local="clr-namespace:PasswordManager"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Decrypting file" Height="255.38" Width="313.291" BorderBrush="Black" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" IsMinButtonEnabled="False" ShowMinButton="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsWindowDraggable="False">
+        Title="Decrypting file" Height="217.38" Width="291.75" BorderBrush="Black" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" IsMinButtonEnabled="False" ShowMinButton="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsWindowDraggable="False">
     <Grid Background="#FFF3F3F3">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="240*"/>
-            <ColumnDefinition Width="67*"/>
-        </Grid.ColumnDefinitions>
+
         <Label x:Name="label" Content="Enter your password to decrypt the file" HorizontalAlignment="Left" Margin="33,36,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="tbPassword" HorizontalAlignment="Left" Height="23" Margin="33,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" Grid.ColumnSpan="2" PreviewKeyDown="tbPassword_PreviewKeyDown"/>
-        <Button x:Name="btDecrypt" Content="Decrypt" HorizontalAlignment="Left" Margin="57,121,0,0" VerticalAlignment="Top" Width="75" Click="btDecrypt_Click"/>
-        <Button x:Name="btCancel" Content="Cancel" HorizontalAlignment="Left" Margin="173,121,0,0" VerticalAlignment="Top" Width="75" Click="btCancel_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="btDecrypt" Content="Decrypt" HorizontalAlignment="Left" Margin="53,110,0,0" VerticalAlignment="Top" Width="75" Click="btDecrypt_Click"/>
+        <Button x:Name="btCancel" Content="Cancel" HorizontalAlignment="Left" Margin="160,110,0,0" VerticalAlignment="Top" Width="75" Click="btCancel_Click"/>
+        <PasswordBox x:Name="tbPassword" HorizontalAlignment="Left" Margin="38,62,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="210" PreviewKeyDown="tbPassword_PreviewKeyDown"/>
 
     </Grid>
 </Controls:MetroWindow>

@@ -10,7 +10,7 @@
         Title="Password Manager" Height="350" Width="525" Background="#FF494949" Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded" BorderBrush="#FF3A3A3A">
     <Grid Background="#FFB4B4B4" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="gcd1" Width="141"/>
+            <ColumnDefinition x:Name="gcd1" Width="140"/>
             <ColumnDefinition x:Name="gcd2" Width="auto" MinWidth="3"/>
             <ColumnDefinition x:Name="gcd3" />
         </Grid.ColumnDefinitions>
@@ -47,25 +47,28 @@
 
         <Menu x:Name="topMenu" Height="26" VerticalAlignment="Top" FontSize="12" Grid.Row="0" Grid.ColumnSpan="3">
 
-            <MenuItem Header="_FILE">
+            <MenuItem Header="_File">
                 <MenuItem x:Name="miNew" Header="_New..." Click="MenuItem_Click" InputGestureText="Ctrl+N"/>
                 <MenuItem x:Name="miOpen" Header="_Open..." Click="miOpen_Click" InputGestureText="Ctrl+O"/>
                 <MenuItem x:Name="miSave" Header="_Save" IsEnabled="False" Click="miSave_Click" InputGestureText="Ctrl+S"/>
-                <MenuItem x:Name="miSaveAs" Header="_Save Aa..." IsEnabled="False" Click="miSaveAs_Click"/>
+                <MenuItem x:Name="miSaveAs" Header="_Save As..." IsEnabled="False" Click="miSaveAs_Click"/>
                 <Separator />
                 <MenuItem x:Name="miExit" Header="_Exit" Click="miExit_Click" />
             </MenuItem>
-            <MenuItem Header="_DATA">
-                <MenuItem x:Name="miAdd" Header="_Add item..." Click="MenuItem_Click_1" IsEnabled="False"/>
-                <MenuItem x:Name="miEdit" Header="_Edit/View item..." Click="MenuItem_Click_2" IsEnabled="False"/>
-                <MenuItem x:Name="miDuplicate" Header="_Duplicate item" IsEnabled="False"/>
-                <MenuItem x:Name="miRemove" Header="_Remove item" Click="MenuItem_Click_3" IsEnabled="False"/>
+            <MenuItem Header="_Data">
+                <MenuItem x:Name="miAdd" Header="_Add item..." Click="miAdd_Click" IsEnabled="False" InputGestureText="Ctrl+I"/>
+                <MenuItem x:Name="miEdit" Header="_Edit/View item..." Click="miEdit_Click" IsEnabled="False" InputGestureText="Enter"/>
+                <MenuItem x:Name="miDuplicate" Header="_Duplicate item" IsEnabled="False" InputGestureText="Ctrl+K" Click="miDuplicate_Click"/>
+                <MenuItem x:Name="miRemove" Header="_Remove item" Click="miRemoveItem_Click" IsEnabled="False" InputGestureText="Del"/>
                 <Separator />
                 <MenuItem x:Name="miSelectAll" Header="_Select All" IsEnabled="False"/>
                 <MenuItem x:Name="miFind" Header="_Find" IsEnabled="False"/>
 
             </MenuItem>
-            <MenuItem Header="_VIEW" IsEnabled="True">
+            <MenuItem Header="_View" IsEnabled="True">
+                <MenuItem x:Name="mivShowPreview" Header="_Show Preview Entry" Click="mivShowPreview_Click" IsChecked="True"/>
+                <MenuItem x:Name="mivShowCat" Header="_Show Categories" Click="mivShowCat_Click" IsChecked="True"/>
+                <Separator/>
                 <MenuItem Header="_Sort By" >
                     <MenuItem x:Name="mivNoSort" Header="_No Sort" IsChecked="True" />
                     <Separator/>
@@ -84,12 +87,12 @@
                 </MenuItem>
 
             </MenuItem>
-            <MenuItem Header="_TOOLS">
+            <MenuItem Header="_Tools">
                 <MenuItem x:Name="miPasswordGenerator" Header="_Password Generator..." Click="miPasswordGenerator_Click" />
                 <MenuItem x:Name="miOptions" Header="_Options..." />
             </MenuItem>
-            <MenuItem Header="_HELP">
-                <MenuItem Header="_ABOUT" Click="MenuItem_Click_4" />
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About me" Click="MenuItem_Click_4" />
             </MenuItem>
         </Menu>
         <ListBox x:Name="lbxCategories" Grid.Column="0" Margin="0,27,0,0" Grid.RowSpan="2" SelectionChanged="lbxCategories_SelectionChanged" Visibility="Hidden"/>
@@ -102,12 +105,18 @@
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ContextMenu>
-                <ContextMenu>
+                <ContextMenu FontSize="10">
                     <ContextMenu.ItemsSource>
                         <CompositeCollection>
-                            <MenuItem Header="Add new item" />
-                            <MenuItem Header="Edit" />
-                            <MenuItem Header="Remove" />
+                            <MenuItem x:Name="cmCopyUserName" Header="_Copy User Name" IsEnabled="False" InputGestureText="Ctrl+B" Click="cmCopyUserName_Click"/>
+                            <MenuItem x:Name="cmCopyPassword" Header="_Copy Password" IsEnabled="False" InputGestureText="Ctrl+C" Click="cmCopyPassword_Click"/>
+                            <Separator/>
+                            <MenuItem x:Name="cmAdd" Header="_Add item..." Click="miAdd_Click" IsEnabled="False" InputGestureText="Ctrl+I"/>
+                            <MenuItem x:Name="cmEdit" Header="_Edit/View item..." Click="miEdit_Click" IsEnabled="False" InputGestureText="Enter"/>
+                            <MenuItem x:Name="cmDuplicate" Header="_Duplicate item" IsEnabled="False" Click="miDuplicate_Click" InputGestureText="Ctrl+K"/>
+                            <MenuItem x:Name="cmRemove" Header="_Remove item" Click="miRemoveItem_Click" IsEnabled="False" InputGestureText="Del"/>
+                            <Separator />
+                            <MenuItem x:Name="cmSelectAll" Header="_Select All" IsEnabled="False"/>
 
                         </CompositeCollection>
                     </ContextMenu.ItemsSource>

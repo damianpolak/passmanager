@@ -70,7 +70,17 @@ namespace PasswordManager
             miSave.IsEnabled = true;
             miSaveAs.IsEnabled = true;
             miDuplicate.IsEnabled = true;
+
+            // ContextMenu
+            cmAdd.IsEnabled = true;
+            cmCopyPassword.IsEnabled = true;
+            cmCopyUserName.IsEnabled = true;
+            cmDuplicate.IsEnabled = true;
+            cmEdit.IsEnabled = true;
+            cmRemove.IsEnabled = true;
+            cmSelectAll.IsEnabled = true;
             
+
         }
 
         private void DisableControls()
@@ -81,6 +91,15 @@ namespace PasswordManager
             miSaveAs.IsEnabled = false;
             miSave.IsEnabled = false;
             miDuplicate.IsEnabled = false;
+
+            // ContextMenu
+            cmAdd.IsEnabled = false;
+            cmCopyPassword.IsEnabled = false;
+            cmCopyUserName.IsEnabled = false;
+            cmDuplicate.IsEnabled = false;
+            cmEdit.IsEnabled = false;
+            cmRemove.IsEnabled = false;
+            cmSelectAll.IsEnabled = false;
         }
         public class Item
         {
@@ -107,7 +126,10 @@ namespace PasswordManager
                 ClearAll();
                 EnableControls();
                 appManagement.appVariables.sActualFilePath = newWindow.sInputDir;
-            } 
+            } else
+            {
+                bIsActiveDocument = false;
+            }
         }
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -132,16 +154,8 @@ namespace PasswordManager
             appSettings.columnDescriptionWidth = columnDescription.Width;
             appSettings.columnCategoryWidth = columnCategory.Width;
             appSettings.columnLastChangesWidth = columnLastChanges.Width;
-
-            /*
             appSettings.gcd1 = gcd1.Width.Value;
-            appSettings.gcd2 = gcd2.Width.Value;
-            appSettings.gcd3 = gcd3.Width.Value;
-
-            appSettings.grd1 = grd1.Height.Value;
-            appSettings.grd2 = grd2.Height.Value;
-            appSettings.grd3 = grd3.Height.Value;
-            appSettings.grd4 = grd4.Height.Value;*/
+            appSettings.grd4 = grd4.Height.Value;
             appManagement.SaveSettingsToFile(appSettings);
         }
 
@@ -162,50 +176,11 @@ namespace PasswordManager
                 columnDescription.Width = appSettings.columnDescriptionWidth;
                 columnLastChanges.Width = appSettings.columnLastChangesWidth;
                 columnCategory.Width = appSettings.columnCategoryWidth;
-                /*
-                gcd1.Width = new GridLength(appSettings.gcd1);
-                gcd2.Width = new GridLength(appSettings.gcd2);
-                gcd3.Width = new GridLength(appSettings.gcd3);
-
-                grd1.Height = new GridLength(appSettings.grd1);
-                grd2.Height = new GridLength(appSettings.grd2);
-                grd3.Height = new GridLength(appSettings.grd3);
-                grd4.Height = new GridLength(appSettings.grd4);*/
-
+                gcd1.Width = new GridLength(appSettings.gcd1, GridUnitType.Pixel);
+                grd4.Height = new GridLength(appSettings.grd4, GridUnitType.Star);
             }
         }
-
-        #region ---- ADD NEW ITEM ----
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-            AddWindow addWindow = new AddWindow();
-            addWindow.Owner = this;
-            addWindow.cbCategory.ItemsSource = listCategories;
-            if(addWindow.ShowDialog() == true)
-            {
-                listDataBase.Add(new DataBase()
-                {
-                    Name = addWindow.tbName.Text,
-                    Login = addWindow.tbLogin.Text,
-                    Password = addWindow.tbPassword.Text,
-                    Link = addWindow.tbLink.Text,
-                    Description = addWindow.tbDescription.Text,
-                    Category = addWindow.cbCategory.Text,
-                    DateAndTime = DateTime.Now.ToString()
-                    
-                });
-
-                if(listDataBase.Last<DataBase>().Category != null)
-                    listCategories.Add(listDataBase.Last<DataBase>().Category);
-                UpdateCategoryList();
-                listViewPasswords.Items.Add(listDataBase.Last<DataBase>());
-                bMadeChanges = true;
-            }
-
-        }
-        #endregion ADD NEW ITEM END
-
-        
+      
         public List<string> GetCategoryList()
         {
             //List<string> lCategory = new List<string>();
@@ -221,12 +196,13 @@ namespace PasswordManager
             return listCategories;
 
         }
-        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        private void miEdit_Click(object sender, RoutedEventArgs e)
         {
             if(listViewPasswords.SelectedItem != null)
             {
                 AddWindow editWindow = new AddWindow();
                 editWindow.btAdd.Content = "Save";
+                editWindow.Owner = this;
                 DataBase db = (DataBase)listViewPasswords.SelectedItem;
                 editWindow.Title = "Edit [" + db.Name + "]";
                 editWindow.tbName.Text = db.Name;
@@ -236,7 +212,6 @@ namespace PasswordManager
                 editWindow.tbDescription.Text = db.Description;
                 editWindow.cbCategory.ItemsSource = listCategories;
 
-                
                 if (editWindow.ShowDialog() == true)
                 {
                     listDataBase[listDataBase.FindIndex(x => x.Name == db.Name)].Name = editWindow.tbName.Text;
@@ -262,7 +237,7 @@ namespace PasswordManager
             }
         }
 
-        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        private void miRemoveItem_Click(object sender, RoutedEventArgs e)
         {
             if (listViewPasswords.SelectedItem != null)
             {
@@ -279,13 +254,29 @@ namespace PasswordManager
                 MenuItem_Click(sender, e);
             if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.O))
                 miOpen_Click(sender, e);
-            if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.S))
-                miSave_Click(sender, e);
+
+            if(bIsActiveDocument == true)
+            {
+                if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.S))
+                    miSave_Click(sender, e);
+                if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.I))
+                    miAdd_Click(sender, e);
+                if (Keyboard.IsKeyDown(Key.Delete))
+                    miRemoveItem_Click(sender, e);
+                if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.B))
+                    cmCopyUserName_Click(sender, e);
+                if (Keyboard.IsKeyDown(Key.Enter))
+                    miEdit_Click(sender, e);
+                if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.K))
+                    miDuplicate_Click(sender, e);
+
+            }
+
+                
         }
 
         private void miExit_Click(object sender, RoutedEventArgs e)
         {
-
             if(bMadeChanges == false)
             {
                 Application.Current.Shutdown();
@@ -294,7 +285,6 @@ namespace PasswordManager
                 SaveToFileDialog();
                 Application.Current.Shutdown();
             }
-            
         }
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
@@ -326,7 +316,8 @@ namespace PasswordManager
                     of.Owner = this;
                     if(of.ShowDialog() == true)
                     {
-                        passwordToEncode = of.tbPassword.Text;
+                        bIsActiveDocument = true;
+                        passwordToEncode = of.tbPassword.Password;
                         appManagement.sInputKey = passwordToEncode;
 
                         string sReadFile = appManagement.DecryptRijndael(File.ReadAllText(
@@ -351,12 +342,10 @@ namespace PasswordManager
                                 EnableControls();
                                 ShowItemsInListView(listDataBase);
                                 UpdateCategoryList();
-
-
                                 break;
                         }
 
-                    }
+                    } 
 
                 }
 
@@ -479,6 +468,115 @@ namespace PasswordManager
                         break;
                 }
 
+            }
+        }
+
+        private void miAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddWindow addWindow = new AddWindow();
+            addWindow.Owner = this;
+            addWindow.cbCategory.ItemsSource = listCategories;
+            if (addWindow.ShowDialog() == true)
+            {
+                listDataBase.Add(new DataBase()
+                {
+                    Name = addWindow.tbName.Text,
+                    Login = addWindow.tbLogin.Text,
+                    Password = addWindow.tbPassword.Text,
+                    Link = addWindow.tbLink.Text,
+                    Description = addWindow.tbDescription.Text,
+                    Category = addWindow.cbCategory.Text,
+                    DateAndTime = DateTime.Now.ToString()
+
+                });
+
+                if (listDataBase.Last<DataBase>().Category != null)
+                    listCategories.Add(listDataBase.Last<DataBase>().Category);
+                UpdateCategoryList();
+                listViewPasswords.Items.Add(listDataBase.Last<DataBase>());
+                bMadeChanges = true;
+            }
+        }
+
+        private void mivShowPreview_Click(object sender, RoutedEventArgs e)
+        {
+            if (mivShowPreview.IsChecked == true)
+            {
+                mivShowPreview.IsChecked = false;
+                tbEntryView.Visibility = Visibility.Hidden;
+                grd4.Height = new GridLength(0, GridUnitType.Star);
+                
+            } else
+            {
+                mivShowPreview.IsChecked = true;
+                tbEntryView.Visibility = Visibility.Visible;
+                grd4.Height = new GridLength(51, GridUnitType.Star);
+            }
+        }
+
+        private void mivShowCat_Click(object sender, RoutedEventArgs e)
+        {
+            if(mivShowCat.IsChecked == true)
+            {
+                mivShowCat.IsChecked = false;
+                lbxCategories.Visibility = Visibility.Hidden;
+                gcd1.Width = new GridLength(0, GridUnitType.Star);
+            } else
+            {
+                mivShowCat.IsChecked = true;
+                lbxCategories.Visibility = Visibility.Visible;
+                gcd1.Width = new GridLength(140, GridUnitType.Pixel);
+            }
+        }
+
+        private void cmCopyUserName_Click(object sender, RoutedEventArgs e)
+        {
+            if (listViewPasswords.SelectedItem != null)
+            {
+                DataBase db = (DataBase)listViewPasswords.SelectedItem;
+                Clipboard.SetText(db.Login);
+            }
+        }
+
+        private void cmCopyPassword_Click(object sender, RoutedEventArgs e)
+        {
+            if(listViewPasswords.SelectedItem != null)
+            {
+                DataBase db = (DataBase)listViewPasswords.SelectedItem;
+                string result = (from DataBase d in listDataBase
+                              where d.Name == db.Name
+                              select d.Password).First().ToString();
+                Clipboard.SetText(result);
+            }
+        }
+
+        private void miDuplicate_Click(object sender, RoutedEventArgs e)
+        {
+            if(listViewPasswords.SelectedItem != null)
+            {
+                DataBase db = (DataBase)listViewPasswords.SelectedItem;
+
+                var result = (from DataBase d in listDataBase
+                              where d.Name == db.Name
+                              select db).ToList();
+                
+                listDataBase.Add(new DataBase()
+                {
+                    Name = result.First().Name,
+                    Login = result.First().Login,
+                    Password = result.First().Password,
+                    Link = result.First().Link,
+                    Description = result.First().Description,
+                    Category = result.First().Category,
+                    DateAndTime = DateTime.Now.ToString()
+
+                });
+
+                if (listDataBase.Last<DataBase>().Category != null)
+                    listCategories.Add(listDataBase.Last<DataBase>().Category);
+                UpdateCategoryList();
+                listViewPasswords.Items.Add(listDataBase.Last<DataBase>());
+                bMadeChanges = true;
             }
         }
     }

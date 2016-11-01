@@ -1,0 +1,11 @@
+MSG 01-11-16 (13:09:26) : [Wartość nie może być zerowa.
+Nazwa parametru: path]
+
+MSG 01-11-16 (14:10:55) : [Uzupełnienie jest nieprawidłowe i nie można go usunąć.[KEY IS INVALID]]
+
+MSG 01-11-16 (14:24:29) : [Uzupełnienie jest nieprawidłowe i nie można go usunąć.[KEY IS INVALID]]
+
+MSG 01-11-16 (14:28:52) : [Uzupełnienie jest nieprawidłowe i nie można go usunąć.[KEY IS INVALID]]
+
+MSG 01-11-16 (14:51:11) : [Uzupełnienie jest nieprawidłowe i nie można go usunąć.[KEY IS INVALID]]
+

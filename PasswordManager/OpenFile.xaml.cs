@@ -27,7 +27,7 @@ namespace PasswordManager
         
         private void btDecrypt_Click(object sender, RoutedEventArgs e)
         {
-            if(tbPassword.Text.Length > 7)
+            if(tbPassword.Password.Length > 7)
             {
                 DialogResult = true;
             } else
@@ -55,5 +55,6 @@ namespace PasswordManager
                 btDecrypt_Click(sender, e);
             }
         }
+
     }
 }
