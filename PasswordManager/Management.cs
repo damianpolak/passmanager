@@ -7,7 +7,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
-using System.IO;
 
 namespace PasswordManager
 {

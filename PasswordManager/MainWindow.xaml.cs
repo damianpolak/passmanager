@@ -28,10 +28,11 @@ namespace PasswordManager
         private string passwordToEncode;
         
         private bool bIsActiveDocument = false;
+        private bool bAscendingSort = true;
         private bool bMadeChanges = false;
 
         // TEST
-        TestConsole tc;
+        //TestConsole tc;
         public MainWindow()
         {
             InitializeComponent();
@@ -69,6 +70,7 @@ namespace PasswordManager
             miRemove.IsEnabled = true;
             miSave.IsEnabled = true;
             miSaveAs.IsEnabled = true;
+            miClose.IsEnabled = true;
             miDuplicate.IsEnabled = true;
 
             // ContextMenu
@@ -79,8 +81,6 @@ namespace PasswordManager
             cmEdit.IsEnabled = true;
             cmRemove.IsEnabled = true;
             cmSelectAll.IsEnabled = true;
-            
-
         }
 
         private void DisableControls()
@@ -90,6 +90,7 @@ namespace PasswordManager
             miRemove.IsEnabled = false;
             miSaveAs.IsEnabled = false;
             miSave.IsEnabled = false;
+            miClose.IsEnabled = false;
             miDuplicate.IsEnabled = false;
 
             // ContextMenu
@@ -100,16 +101,6 @@ namespace PasswordManager
             cmEdit.IsEnabled = false;
             cmRemove.IsEnabled = false;
             cmSelectAll.IsEnabled = false;
-        }
-        public class Item
-        {
-            public string Name { get; set; }
-
-            public string Login { get; set; }
-
-            public string Password { get; set; }
-            public string Link { get; set; }
-            public string Description { get; set; }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -156,6 +147,12 @@ namespace PasswordManager
             appSettings.columnLastChangesWidth = columnLastChanges.Width;
             appSettings.gcd1 = gcd1.Width.Value;
             appSettings.grd4 = grd4.Height.Value;
+            appSettings.bNoSort = mivNoSort.IsChecked;
+            appSettings.bSortByTitle = mivTitleSort.IsChecked;
+            appSettings.bSortByUserName = mivLoginSort.IsChecked;
+            appSettings.bSortByPassword = mivPasswordSort.IsChecked;
+            appSettings.bSortByURL = mivLinkSort.IsChecked;
+            appSettings.bAscendingSort = bAscendingSort;
             appManagement.SaveSettingsToFile(appSettings);
         }
 
@@ -178,6 +175,12 @@ namespace PasswordManager
                 columnCategory.Width = appSettings.columnCategoryWidth;
                 gcd1.Width = new GridLength(appSettings.gcd1, GridUnitType.Pixel);
                 grd4.Height = new GridLength(appSettings.grd4, GridUnitType.Star);
+                mivNoSort.IsChecked = appSettings.bNoSort;
+                mivTitleSort.IsChecked = appSettings.bSortByTitle;
+                mivLoginSort.IsChecked = appSettings.bSortByUserName;
+                mivPasswordSort.IsChecked = appSettings.bSortByPassword;
+                mivLinkSort.IsChecked = appSettings.bSortByURL;
+                bAscendingSort = appSettings.bAscendingSort;
             }
         }
       
@@ -230,7 +233,7 @@ namespace PasswordManager
                     ((DataBase)listViewPasswords.Items[listViewPasswords.SelectedIndex]).Category = editWindow.cbCategory.Text;
                     ((DataBase)listViewPasswords.Items[listViewPasswords.SelectedIndex]).DateAndTime = DateTime.Now.ToString();
 
-                    listViewPasswords.Items.Refresh();
+                    ViewAndSortListView();
                     bMadeChanges = true;
                 }
 
@@ -340,7 +343,7 @@ namespace PasswordManager
                                 File.Delete(appManagement.appVariables.sActualFilePath + ".temp");
                                 TurnOnVisibility();
                                 EnableControls();
-                                ShowItemsInListView(listDataBase);
+                                ViewAndSortListView();
                                 UpdateCategoryList();
                                 break;
                         }
@@ -375,6 +378,7 @@ namespace PasswordManager
             lbxCategories.ItemsSource = listCategories;
             lbxCategories.Items.Refresh();
         }
+
         public void TurnOnVisibility()
         {
             listViewPasswords.Visibility = Visibility.Visible;
@@ -382,6 +386,15 @@ namespace PasswordManager
             tbEntryView.Visibility = Visibility.Visible;
             gSplitter.Visibility = Visibility.Visible;
             gSplitter2.Visibility = Visibility.Visible;
+        }
+
+        public void TurnOffVisibility()
+        {
+            listViewPasswords.Visibility = Visibility.Hidden;
+            lbxCategories.Visibility = Visibility.Hidden;
+            tbEntryView.Visibility = Visibility.Hidden;
+            gSplitter.Visibility = Visibility.Hidden;
+            gSplitter2.Visibility = Visibility.Hidden;
         }
         public void SaveToFileDialog()
         {
@@ -432,6 +445,7 @@ namespace PasswordManager
         private void miPasswordGenerator_Click(object sender, RoutedEventArgs e)
         {
             Generator pg = new Generator();
+            pg.Owner = this;
             pg.Show();
         }
 
@@ -454,9 +468,7 @@ namespace PasswordManager
         {
             if(lbxCategories.SelectedItem != null)
             {
-                
                 string sCategory = (String)lbxCategories.SelectedItem;
-
                 switch(sCategory)
                 {
                     case "General":
@@ -464,10 +476,8 @@ namespace PasswordManager
                         break;
                     default:
                         ShowItemsInListView(DBQueries.GetItemsByCategory(listDataBase, sCategory));
-                        
                         break;
                 }
-
             }
         }
 
@@ -487,13 +497,12 @@ namespace PasswordManager
                     Description = addWindow.tbDescription.Text,
                     Category = addWindow.cbCategory.Text,
                     DateAndTime = DateTime.Now.ToString()
-
                 });
 
                 if (listDataBase.Last<DataBase>().Category != null)
                     listCategories.Add(listDataBase.Last<DataBase>().Category);
                 UpdateCategoryList();
-                listViewPasswords.Items.Add(listDataBase.Last<DataBase>());
+                ViewAndSortListView();
                 bMadeChanges = true;
             }
         }
@@ -569,7 +578,6 @@ namespace PasswordManager
                     Description = result.First().Description,
                     Category = result.First().Category,
                     DateAndTime = DateTime.Now.ToString()
-
                 });
 
                 if (listDataBase.Last<DataBase>().Category != null)
@@ -578,6 +586,135 @@ namespace PasswordManager
                 listViewPasswords.Items.Add(listDataBase.Last<DataBase>());
                 bMadeChanges = true;
             }
+        }
+
+
+        private void mivTitleSort_Click(object sender, RoutedEventArgs e)
+        {
+            if(mivTitleSort.IsChecked == false)
+            {
+                mivTitleSort.IsChecked = true;
+
+                // Other sort options false
+                mivNoSort.IsChecked = false;
+                mivLoginSort.IsChecked = false;
+                mivPasswordSort.IsChecked = false;
+                mivLinkSort.IsChecked = false;
+            }
+            ShowItemsInListView(DBQueries.SortByTitle(listDataBase, bAscendingSort));
+        }
+
+        private void mivNoSort_Click(object sender, RoutedEventArgs e)
+        {
+            if(mivNoSort.IsChecked == false)
+            {
+                mivNoSort.IsChecked = true;
+
+                // Other sort options false
+                mivTitleSort.IsChecked = false;
+                mivLoginSort.IsChecked = false;
+                mivPasswordSort.IsChecked = false;
+                mivLinkSort.IsChecked = false;
+            }
+            ShowItemsInListView(DBQueries.NoSort(listDataBase));
+
+        }
+
+        private void mivLoginSort_Click(object sender, RoutedEventArgs e)
+        {
+            if (mivLoginSort.IsChecked == false)
+            {
+                mivLoginSort.IsChecked = true;
+
+                // Other sort options false
+                mivTitleSort.IsChecked = false;
+                mivNoSort.IsChecked = false;
+                mivPasswordSort.IsChecked = false;
+                mivLinkSort.IsChecked = false;
+            }
+            ShowItemsInListView(DBQueries.SortByUserName(listDataBase, bAscendingSort));
+        }
+
+        private void mivPasswordSort_Click(object sender, RoutedEventArgs e)
+        {
+            if (mivPasswordSort.IsChecked == false)
+            {
+                mivPasswordSort.IsChecked = true;
+
+                // Other sort options false
+                mivTitleSort.IsChecked = false;
+                mivLoginSort.IsChecked = false;
+                mivNoSort.IsChecked = false;
+                mivLinkSort.IsChecked = false;
+            }
+            ShowItemsInListView(DBQueries.SortByPassword(listDataBase, bAscendingSort));
+        }
+
+        private void mivLinkSort_Click(object sender, RoutedEventArgs e)
+        {
+            if (mivLinkSort.IsChecked == false)
+            {
+                mivLinkSort.IsChecked = true;
+
+                // Other sort options false
+                mivTitleSort.IsChecked = false;
+                mivLoginSort.IsChecked = false;
+                mivPasswordSort.IsChecked = false;
+                mivNoSort.IsChecked = false;
+            }
+            ShowItemsInListView(DBQueries.SortByURL(listDataBase, bAscendingSort));
+        }
+
+        private void mivAscending_Click(object sender, RoutedEventArgs e)
+        {
+            if(mivAscending.IsChecked == false)
+            {
+                mivAscending.IsChecked = true;
+                mivDescending.IsChecked = false;
+                bAscendingSort = true;
+            }
+            ViewAndSortListView();
+        }
+
+        private void mivDescending_Click(object sender, RoutedEventArgs e)
+        {
+            if(mivDescending.IsChecked == false)
+            {
+                mivDescending.IsChecked = true;
+                mivAscending.IsChecked = false;
+                bAscendingSort = false;
+            }
+            ViewAndSortListView();
+        }
+
+        public void ViewAndSortListView()
+        {
+            if (mivNoSort.IsChecked == true)
+                ShowItemsInListView(DBQueries.NoSort(listDataBase));
+            if (mivTitleSort.IsChecked == true)
+                ShowItemsInListView(DBQueries.SortByTitle(listDataBase, bAscendingSort));
+            if (mivLoginSort.IsChecked == true)
+                ShowItemsInListView(DBQueries.SortByUserName(listDataBase, bAscendingSort));
+            if (mivPasswordSort.IsChecked == true)
+                ShowItemsInListView(DBQueries.SortByPassword(listDataBase, bAscendingSort));
+            if (mivLinkSort.IsChecked == true)
+                ShowItemsInListView(DBQueries.SortByURL(listDataBase, bAscendingSort));
+        }
+
+        private void miClose_Click(object sender, RoutedEventArgs e)
+        {
+            if (bMadeChanges == true)
+            {
+                SaveToFileDialog();
+            }
+            else
+            {
+                appManagement.RemoveEmptyFile();
+            }
+
+            ClearAll();
+            TurnOffVisibility();
+            bMadeChanges = false;
         }
     }
 }

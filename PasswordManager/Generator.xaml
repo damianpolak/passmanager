@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PasswordManager"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Password Generator" Height="392" Width="417" BorderBrush="Black" ResizeMode="NoResize" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" IsMinButtonEnabled="False" ShowMinButton="False">
+        Title="Password Generator" Height="392" Width="409.916" BorderBrush="Black" ResizeMode="NoResize" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" IsMinButtonEnabled="False" ShowMinButton="False" WindowStartupLocation="CenterOwner">
     <Grid>
 
         <CheckBox x:Name="cbAlpha" Content="ABCDE...XYZ" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="96"/>

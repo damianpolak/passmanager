@@ -1,0 +1,2 @@
+MSG 01-11-16 (20:08:44) : [Uzupełnienie jest nieprawidłowe i nie można go usunąć.[KEY IS INVALID]]
+

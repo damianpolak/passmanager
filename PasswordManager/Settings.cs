@@ -21,12 +21,13 @@ namespace PasswordManager
         public double columnLastChangesWidth;
         public double columnCategoryWidth;
         public double gcd1;
-        /*
-        public double gcd2;
-        public double gcd3;
-        public double grd1;
-        public double grd2;
-        public double grd3;*/
         public double grd4;
+
+        public bool bAscendingSort;
+        public bool bNoSort;
+        public bool bSortByTitle;
+        public bool bSortByUserName;
+        public bool bSortByPassword;
+        public bool bSortByURL;
     }
 }

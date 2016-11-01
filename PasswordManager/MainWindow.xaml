@@ -7,7 +7,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:ControlzEx="clr-namespace:ControlzEx;assembly=MahApps.Metro" x:Class="PasswordManager.MainWindow"
         mc:Ignorable="d"
-        Title="Password Manager" Height="350" Width="525" Background="#FF494949" Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded" BorderBrush="#FF3A3A3A">
+        Title="Password Manager" Height="446" Width="836.333" Background="#FF494949" Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded" BorderBrush="#FF3A3A3A">
     <Grid Background="#FFB4B4B4" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="gcd1" Width="140"/>
@@ -52,6 +52,7 @@
                 <MenuItem x:Name="miOpen" Header="_Open..." Click="miOpen_Click" InputGestureText="Ctrl+O"/>
                 <MenuItem x:Name="miSave" Header="_Save" IsEnabled="False" Click="miSave_Click" InputGestureText="Ctrl+S"/>
                 <MenuItem x:Name="miSaveAs" Header="_Save As..." IsEnabled="False" Click="miSaveAs_Click"/>
+                <MenuItem x:Name="miClose" Header="_Close" IsEnabled="False" Click="miClose_Click"/>
                 <Separator />
                 <MenuItem x:Name="miExit" Header="_Exit" Click="miExit_Click" />
             </MenuItem>
@@ -70,15 +71,15 @@
                 <MenuItem x:Name="mivShowCat" Header="_Show Categories" Click="mivShowCat_Click" IsChecked="True"/>
                 <Separator/>
                 <MenuItem Header="_Sort By" >
-                    <MenuItem x:Name="mivNoSort" Header="_No Sort" IsChecked="True" />
+                    <MenuItem x:Name="mivNoSort" Header="_No Sort" IsChecked="True" Click="mivNoSort_Click" />
                     <Separator/>
-                    <MenuItem x:Name="mivTitleSort" Header="_Title" />
-                    <MenuItem x:Name="mivLoginSort" Header="_User Name" />
-                    <MenuItem x:Name="mivPasswordSort" Header="_Password" />
-                    <MenuItem x:Name="mivLinkSort" Header="_Link" />
+                    <MenuItem x:Name="mivTitleSort" Header="_Title" Click="mivTitleSort_Click" />
+                    <MenuItem x:Name="mivLoginSort" Header="_User Name" Click="mivLoginSort_Click" />
+                    <MenuItem x:Name="mivPasswordSort" Header="_Password" Click="mivPasswordSort_Click" />
+                    <MenuItem x:Name="mivLinkSort" Header="_Link" Click="mivLinkSort_Click" />
                     <Separator/>
-                    <MenuItem x:Name="mivAscending" Header="_Ascending" IsChecked="True" />
-                    <MenuItem x:Name="mivDescending" Header="_Descending" />
+                    <MenuItem x:Name="mivAscending" Header="_Ascending" IsChecked="True" Click="mivAscending_Click" />
+                    <MenuItem x:Name="mivDescending" Header="_Descending" Click="mivDescending_Click" />
                 </MenuItem>
 
                 <MenuItem Header="Languages">
@@ -97,7 +98,7 @@
         </Menu>
         <ListBox x:Name="lbxCategories" Grid.Column="0" Margin="0,27,0,0" Grid.RowSpan="2" SelectionChanged="lbxCategories_SelectionChanged" Visibility="Hidden"/>
 
-        <ListView x:Name="listViewPasswords" Margin="0,26,0,0" Background="#FFF3F3F3" BorderBrush="{x:Null}" Grid.Column="2" Grid.RowSpan="2" Visibility="Hidden" SelectionChanged="listViewPasswords_SelectionChanged">
+        <ListView x:Name="listViewPasswords" Margin="0,26,0,0" Background="White" BorderBrush="{x:Null}" Grid.Column="2" Grid.RowSpan="2" Visibility="Hidden" SelectionChanged="listViewPasswords_SelectionChanged">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="BorderBrush" Value="LightGray" />
@@ -131,7 +132,9 @@
                     <GridViewColumn x:Name="columnDescription" Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
                     <GridViewColumn x:Name="columnLastChanges" Header="Last Changes" Width="100" DisplayMemberBinding="{Binding DateAndTime}" />
                     <GridViewColumn x:Name="columnCategory" Header="Category" Width="100" DisplayMemberBinding="{Binding Category}" />
+                
                 </GridView>
+                
             </ListView.View>
 
         </ListView>
