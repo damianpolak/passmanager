@@ -8,16 +8,20 @@
         mc:Ignorable="d"
         Title="Password Generator" Height="392" Width="409.916" BorderBrush="Black" ResizeMode="NoResize" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" IsMinButtonEnabled="False" ShowMinButton="False" WindowStartupLocation="CenterOwner">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="45*"/>
+            <ColumnDefinition Width="56*"/>
+        </Grid.ColumnDefinitions>
 
-        <CheckBox x:Name="cbAlpha" Content="ABCDE...XYZ" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="96"/>
-        <CheckBox x:Name="cbNumbers" Content="1234567890" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="96"/>
+        <CheckBox x:Name="cbAlpha" Content="ABCDE...XYZ" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="96" Unchecked="cbAlpha_Unchecked" Checked="cbAlpha_Checked" IsChecked="True"/>
+        <CheckBox x:Name="cbNumbers" Content="1234567890" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="96" Unchecked="cbNumbers_Unchecked" IsChecked="True"/>
         <CheckBox x:Name="cbSpecChar" Content="!@#$%^&amp;*(_+)&quot;:&gt;&lt;?" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="135"/>
         <CheckBox x:Name="cbMd5" Content="md5" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" Width="135"/>
-        <CheckBox x:Name="cbUpperCase" Content="Upper-case (abcd)" HorizontalAlignment="Left" Margin="175,10,0,0" VerticalAlignment="Top" Width="135"/>
-        <CheckBox x:Name="cbLowerCase" Content="Lower-case (ABCD)" HorizontalAlignment="Left" Margin="175,33,0,0" VerticalAlignment="Top" Width="135"/>
-        <Label x:Name="label" Content="Length of generated password:" HorizontalAlignment="Left" Margin="175,51,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbLength" HorizontalAlignment="Left" Height="23" Margin="354,51,0,0" TextWrapping="Wrap" Text="8" VerticalAlignment="Top" Width="36"/>
-        <TextBox x:Name="tbPreview" HorizontalAlignment="Left" Height="163" Margin="10,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" AcceptsReturn="True"/>
-        <Button x:Name="btGenerate" Content="Generate" HorizontalAlignment="Left" Margin="160,302,0,0" VerticalAlignment="Top" Width="78" Click="btGenerate_Click"/>
+        <CheckBox x:Name="cbUpperCase" Content="Upper-case (ABCD)" HorizontalAlignment="Left" Margin="175,10,0,0" VerticalAlignment="Top" Width="135" Grid.ColumnSpan="2" IsChecked="True"/>
+        <CheckBox x:Name="cbLowerCase" Content="Lower-case (abcd)" HorizontalAlignment="Left" Margin="175,33,0,0" VerticalAlignment="Top" Width="135" Grid.ColumnSpan="2"/>
+        <Label x:Name="label" Content="Length of generated password:" HorizontalAlignment="Left" Margin="175,51,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="tbLength" HorizontalAlignment="Left" Height="23" Margin="173.682,51,0,0" TextWrapping="Wrap" Text="8" VerticalAlignment="Top" Width="36" Grid.Column="1"/>
+        <TextBox x:Name="tbPreview" HorizontalAlignment="Left" Height="163" Margin="10,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="2"/>
+        <Button x:Name="btGenerate" Content="Generate" HorizontalAlignment="Left" Margin="160,302,0,0" VerticalAlignment="Top" Width="78" Click="btGenerate_Click" Grid.ColumnSpan="2"/>
     </Grid>
 </Controls:MetroWindow>

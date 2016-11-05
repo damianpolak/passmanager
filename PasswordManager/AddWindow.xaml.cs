@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using System.Security.Cryptography;
 
 namespace PasswordManager
 {
@@ -20,6 +21,8 @@ namespace PasswordManager
     public partial class AddWindow : MetroWindow
     {
         private Logs appLogs;
+        public string UID;
+
         public AddWindow()
         {
             InitializeComponent();
@@ -37,11 +40,22 @@ namespace PasswordManager
         {
             try
             {
-                DialogResult = true;
+                if(cbCategory.Text.Length > 0)
+                    if (cbCategory.Text[0] == ' ')
+                    {
+                        MessageBox.Show("popraw");
+                        return;
+                    }
+                using (MD5 md5hash = MD5.Create())
+                {
+                    UID = Management.GetMd5Hash(md5hash, tbName.Text + tbLogin.Text + tbPassword + DateTime.Now.ToString());
+                }
+                DialogResult = true;  
+                
             }
             catch (Exception ex)
             {
-                appLogs.Message(ex.Message);
+                Logs.Message(ex.Message);
             }
         }
 

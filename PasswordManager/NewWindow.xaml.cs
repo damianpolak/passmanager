@@ -60,7 +60,7 @@ namespace PasswordManager
                 
             } catch(Exception ex)
             {
-                appLogs.Message(ex.Message);
+                Logs.Message(ex.Message);
             }
 
         }
@@ -90,7 +90,7 @@ namespace PasswordManager
                 }
             } catch(Exception ex)
             {
-                appLogs.Message(ex.Message);
+                Logs.Message(ex.Message);
             }
 
         }
@@ -125,6 +125,11 @@ namespace PasswordManager
             }
         }
 
-
+        private void tbGenerate_Click(object sender, RoutedEventArgs e)
+        {
+            Generator generator = new Generator();
+            generator.ShowDialog();
+            generator.Owner = this;
+        }
     }
 }

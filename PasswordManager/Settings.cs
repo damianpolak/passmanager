@@ -20,8 +20,17 @@ namespace PasswordManager
         public double columnDescriptionWidth;
         public double columnLastChangesWidth;
         public double columnCategoryWidth;
+        public double columnCreatedDateTimeWidth;
+        public double columnUIDWidth;
+
+        // Show: category, preview and toolbar
         public double gcd1;
         public double grd4;
+        public bool bShowCategory;
+        public bool bShowPreviewEntries;
+        public bool bShowToolBar;
+        public double marginTopCategories;
+        public double marginTopListPasswords;
 
         public bool bAscendingSort;
         public bool bNoSort;

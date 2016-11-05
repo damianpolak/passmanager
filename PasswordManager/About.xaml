@@ -1,0 +1,19 @@
+﻿<Controls:MetroWindow x:Class="PasswordManager.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PasswordManager"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="About" Height="263.855" Width="446.386" BorderBrush="Black" ResizeMode="NoResize" IsMaxRestoreButtonEnabled="False" ShowMaxRestoreButton="False" IsMinButtonEnabled="False" ShowMinButton="False" WindowStartupLocation="CenterOwner">
+    <Grid Background="#FFF3F3F3">
+        <Image x:Name="image" HorizontalAlignment="Left" Height="48" Margin="25,21,0,0" VerticalAlignment="Top" Width="48" MinWidth="48" MinHeight="48" Source="icons/Show Password-48.ico"/>
+        <Label x:Name="label" Content="Password Manager" HorizontalAlignment="Left" Margin="86,21,0,0" VerticalAlignment="Top" FontSize="21.333"/>
+        <Label x:Name="label1" Content="Copyright © 2016 Damian Polak" HorizontalAlignment="Left" Margin="25,74,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="31,105,0,0" TextWrapping="Wrap" Text="The program is distributed under the term of the GNU General Public License v3" VerticalAlignment="Top" Width="397" Height="41"/>
+        <Label x:Name="label2" Content="https://github.com/mezc4l/PasswordManager" HorizontalAlignment="Left" Margin="27,141,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="33,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="397" Height="53"><Run Text="Icons and Graphics: https://icons8.com/"/><LineBreak/><Run Text="Metro style: MahApps.Metro"/></TextBlock>
+
+    </Grid>
+</Controls:MetroWindow>

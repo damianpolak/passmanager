@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PasswordManager"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:ControlzEx="clr-namespace:ControlzEx;assembly=MahApps.Metro" x:Class="PasswordManager.MainWindow"
+        xmlns:ControlzEx="clr-namespace:ControlzEx;assembly=MahApps.Metro" x:Class="PasswordManager.MainWindowPart2"
         mc:Ignorable="d"
-        Title="Password Manager" Height="446" Width="836.333" Background="#FF494949" Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded" BorderBrush="#FF3A3A3A">
+        Title="Password Manager" Height="446" Width="836.333" Background="#FF494949" Closing="MetroWindow_Closing" Icon="icons/iconlogo.png" Loaded="MetroWindow_Loaded" BorderBrush="#FF3A3A3A" IconOverlayBehavior="Flyouts" IconBitmapScalingMode="Linear">
+
     <Grid Background="#FFB4B4B4" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="gcd1" Width="140"/>
@@ -15,7 +16,7 @@
             <ColumnDefinition x:Name="gcd3" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="grd1" Height="106*" />
+            <RowDefinition x:Name="grd1" Height="auto" />
             <RowDefinition x:Name="grd2" Height="162*" />
             <RowDefinition x:Name="grd3" Height="auto"/>
             <RowDefinition x:Name="grd4" Height="51*"/>
@@ -48,29 +49,77 @@
         <Menu x:Name="topMenu" Height="26" VerticalAlignment="Top" FontSize="12" Grid.Row="0" Grid.ColumnSpan="3">
 
             <MenuItem Header="_File">
-                <MenuItem x:Name="miNew" Header="_New..." Click="MenuItem_Click" InputGestureText="Ctrl+N"/>
-                <MenuItem x:Name="miOpen" Header="_Open..." Click="miOpen_Click" InputGestureText="Ctrl+O"/>
-                <MenuItem x:Name="miSave" Header="_Save" IsEnabled="False" Click="miSave_Click" InputGestureText="Ctrl+S"/>
-                <MenuItem x:Name="miSaveAs" Header="_Save As..." IsEnabled="False" Click="miSaveAs_Click"/>
+                <MenuItem x:Name="miNew" Header="_New..." Click="MenuItem_Click" InputGestureText="Ctrl+N">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/newdoc.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+
+                <MenuItem x:Name="miOpen" Header="_Open..." Click="miOpen_Click" InputGestureText="Ctrl+O">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/openfolder.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miSave" Header="_Save" IsEnabled="False" Click="miSave_Click" InputGestureText="Ctrl+S">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/save.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miSaveAs" Header="_Save As..." IsEnabled="False" Click="miSaveAs_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/saveas.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem x:Name="miClose" Header="_Close" IsEnabled="False" Click="miClose_Click"/>
                 <Separator />
-                <MenuItem x:Name="miExit" Header="_Exit" Click="miExit_Click" />
+                <MenuItem x:Name="miExit" Header="_Exit" Click="miExit_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/shutdown.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Data">
-                <MenuItem x:Name="miAdd" Header="_Add item..." Click="miAdd_Click" IsEnabled="False" InputGestureText="Ctrl+I"/>
-                <MenuItem x:Name="miEdit" Header="_Edit/View item..." Click="miEdit_Click" IsEnabled="False" InputGestureText="Enter"/>
-                <MenuItem x:Name="miDuplicate" Header="_Duplicate item" IsEnabled="False" InputGestureText="Ctrl+K" Click="miDuplicate_Click"/>
-                <MenuItem x:Name="miRemove" Header="_Remove item" Click="miRemoveItem_Click" IsEnabled="False" InputGestureText="Del"/>
+                <MenuItem x:Name="miAdd" Header="_Add item..." Click="miAdd_Click" IsEnabled="False" InputGestureText="Ctrl+I">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/addkey.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miEdit" Header="_Edit/View item..." Click="miEdit_Click" IsEnabled="False" InputGestureText="Enter">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/edit.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miDuplicate" Header="_Duplicate item" IsEnabled="False" InputGestureText="Ctrl+K" Click="miDuplicate_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/clone.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miRemove" Header="_Remove item" Click="miRemoveItem_Click" IsEnabled="False" InputGestureText="Del">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/removekey.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
                 <MenuItem x:Name="miSelectAll" Header="_Select All" IsEnabled="False"/>
-                <MenuItem x:Name="miFind" Header="_Find" IsEnabled="False"/>
+                <MenuItem x:Name="miFind" Header="_Find" IsEnabled="False">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/search.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
 
             </MenuItem>
-            <MenuItem Header="_View" IsEnabled="True">
-                <MenuItem x:Name="mivShowPreview" Header="_Show Preview Entry" Click="mivShowPreview_Click" IsChecked="True"/>
-                <MenuItem x:Name="mivShowCat" Header="_Show Categories" Click="mivShowCat_Click" IsChecked="True"/>
+            <MenuItem x:Name="miView" Header="_View" IsEnabled="True">
+                <MenuItem x:Name="mivShowPreview" Header="_Show Preview Entry" Click="mivShowPreview_Click" IsChecked="True" IsEnabled="False"/>
+                <MenuItem x:Name="mivShowCat" Header="_Show Categories" Click="mivShowCat_Click" IsChecked="True" IsEnabled="False"/>
+                <MenuItem x:Name="mivShowToolBar" Header="_Show Toolbar" IsChecked="True" IsEnabled="True" Click="mivShowToolBar_Click"/>
                 <Separator/>
-                <MenuItem Header="_Sort By" >
+                <MenuItem x:Name="mivConfigureColumns" Header="_Configure Columns" Click="mivConfigureColumns_Click" />
+                <Separator/>
+                <MenuItem x:Name="mivSortBy" Header="_Sort By" IsEnabled="False" >
+                    <MenuItem.Icon>
+                        <Image Source="/icons/sort.png" Height="20"/>
+                    </MenuItem.Icon>
                     <MenuItem x:Name="mivNoSort" Header="_No Sort" IsChecked="True" Click="mivNoSort_Click" />
                     <Separator/>
                     <MenuItem x:Name="mivTitleSort" Header="_Title" Click="mivTitleSort_Click" />
@@ -83,22 +132,68 @@
                 </MenuItem>
 
                 <MenuItem Header="Languages">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/lang.png" Height="20"/>
+                    </MenuItem.Icon>
                     <MenuItem Header="_ENGLISH" />
                     <MenuItem Header="_POLISH" />
                 </MenuItem>
 
             </MenuItem>
             <MenuItem Header="_Tools">
-                <MenuItem x:Name="miPasswordGenerator" Header="_Password Generator..." Click="miPasswordGenerator_Click" />
-                <MenuItem x:Name="miOptions" Header="_Options..." />
+                <MenuItem x:Name="miPasswordGenerator" Header="_Password Generator..." Click="miPasswordGenerator_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/generator.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miOptions" Header="_Options...">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/settings.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Help">
-                <MenuItem Header="_About me" Click="MenuItem_Click_4" />
+                <MenuItem Header="_About me" Click="MenuItem_Click_4">
+                    <MenuItem.Icon>
+                        <Image Source="/icons/about.png" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
         </Menu>
-        <ListBox x:Name="lbxCategories" Grid.Column="0" Margin="0,27,0,0" Grid.RowSpan="2" SelectionChanged="lbxCategories_SelectionChanged" Visibility="Hidden"/>
+        <ToolBarTray x:Name="tbtMenu" Grid.ColumnSpan="3" Grid.Row="0" Height="30" Margin="0,27,0,267">
+            <ToolBar>
+                <Button Name="tbtOpen" Margin="0,0,0,28" Height="25" Click="miOpen_Click">
+                    <Image Source="/icons/openfolder.png"/>
+                </Button>
+                <Button Name="tbtNew" Margin="0,0,0,28" Height="25" Click="MenuItem_Click">
+                    <Image Source="/icons/newdoc.png"/>
+                </Button>
+                <Button Name="tbtSave" Margin="0,0,0,28" Height="25" Click="miSave_Click" IsEnabled="False">
+                    <Image Source="/icons/save.png"/>
+                </Button>
+                <Button Name="tbtSaveAs" Margin="0,0,0,28" Height="25" Click="miSaveAs_Click" Visibility="Collapsed">
+                    <Image Source="/icons/saveas.png"/>
+                </Button>
+            </ToolBar>
+            <ToolBar>
+                <Button Name="tbtCopyUserName" Margin="0,0,0,28" Height="25" Click="cmCopyUserName_Click" IsEnabled="False">
+                    <Image Source="/icons/user.png"/>
+                </Button>
+                <Button Name="tbtCopyPassword" Margin="0,0,0,28" Height="25" Click="cmCopyPassword_Click" IsEnabled="False">
+                    <Image Source="/icons/key.png"/>
+                </Button>
+                <Button Name="tbtFind" Margin="0,0,0,28" Height="25" IsEnabled="False">
+                    <Image Source="/icons/search.png"/>
+                </Button>
+                <Button Name="tbtLockWorkSpace" Margin="0,0,0,28" Height="25" IsEnabled="False">
+                    <Image Source="/icons/lock.png"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
 
-        <ListView x:Name="listViewPasswords" Margin="0,26,0,0" Background="White" BorderBrush="{x:Null}" Grid.Column="2" Grid.RowSpan="2" Visibility="Hidden" SelectionChanged="listViewPasswords_SelectionChanged">
+        <ListBox x:Name="lbxCategories" Grid.Column="0" Margin="0,57,0,0" Grid.RowSpan="2" SelectionChanged="lbxCategories_SelectionChanged" BorderThickness="0,1,0,0" BorderBrush="#FF8F8F8F" Visibility="Hidden"/>
+
+        <ListView x:Name="listViewPasswords" Margin="0,57,0,0" Background="White" BorderBrush="#FF8F8F8F" Grid.Column="2" Grid.RowSpan="2" SelectionChanged="listViewPasswords_SelectionChanged" Visibility="Hidden" BorderThickness="0,1,1,0">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="BorderBrush" Value="LightGray" />
@@ -109,13 +204,37 @@
                 <ContextMenu FontSize="10">
                     <ContextMenu.ItemsSource>
                         <CompositeCollection>
-                            <MenuItem x:Name="cmCopyUserName" Header="_Copy User Name" IsEnabled="False" InputGestureText="Ctrl+B" Click="cmCopyUserName_Click"/>
-                            <MenuItem x:Name="cmCopyPassword" Header="_Copy Password" IsEnabled="False" InputGestureText="Ctrl+C" Click="cmCopyPassword_Click"/>
+                            <MenuItem x:Name="cmCopyUserName" Header="_Copy User Name" IsEnabled="False" InputGestureText="Ctrl+B" Click="cmCopyUserName_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="/icons/user.png" Height="20"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="cmCopyPassword" Header="_Copy Password" IsEnabled="False" InputGestureText="Ctrl+C" Click="cmCopyPassword_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="/icons/key.png" Height="20"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <Separator/>
-                            <MenuItem x:Name="cmAdd" Header="_Add item..." Click="miAdd_Click" IsEnabled="False" InputGestureText="Ctrl+I"/>
-                            <MenuItem x:Name="cmEdit" Header="_Edit/View item..." Click="miEdit_Click" IsEnabled="False" InputGestureText="Enter"/>
-                            <MenuItem x:Name="cmDuplicate" Header="_Duplicate item" IsEnabled="False" Click="miDuplicate_Click" InputGestureText="Ctrl+K"/>
-                            <MenuItem x:Name="cmRemove" Header="_Remove item" Click="miRemoveItem_Click" IsEnabled="False" InputGestureText="Del"/>
+                            <MenuItem x:Name="cmAdd" Header="_Add item..." Click="miAdd_Click" IsEnabled="False" InputGestureText="Ctrl+I">
+                                <MenuItem.Icon>
+                                    <Image Source="/icons/addkey.png" Height="20"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="cmEdit" Header="_Edit/View item..." Click="miEdit_Click" IsEnabled="False" InputGestureText="Enter">
+                                <MenuItem.Icon>
+                                    <Image Source="/icons/edit.png" Height="20"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="cmDuplicate" Header="_Duplicate item" IsEnabled="False" Click="miDuplicate_Click" InputGestureText="Ctrl+K">
+                                <MenuItem.Icon>
+                                    <Image Source="/icons/clone.png" Height="20"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="cmRemove" Header="_Remove item" Click="miRemoveItem_Click" IsEnabled="False" InputGestureText="Del">
+                                <MenuItem.Icon>
+                                    <Image Source="/icons/removekey.png" Height="20"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <Separator />
                             <MenuItem x:Name="cmSelectAll" Header="_Select All" IsEnabled="False"/>
 
@@ -125,20 +244,31 @@
             </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn x:Name="columnName" Header="Title" Width="60" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn x:Name="columnLogin" Header="User Name" Width="70" DisplayMemberBinding="{Binding Login}" />
-                    <GridViewColumn x:Name="columnPassword" Header="Password" Width="120" DisplayMemberBinding="{Binding Password}" />
-                    <GridViewColumn x:Name="columnLink" Header="URL" Width="50" DisplayMemberBinding="{Binding Link}" />
+                    <GridViewColumn x:Name="columnName" Width="60" DisplayMemberBinding="{Binding Name}">
+                        <GridViewColumnHeader Click="mivTitleSort_Click" Content="Title"/>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="columnLogin" Width="70" DisplayMemberBinding="{Binding Login}">
+                        <GridViewColumnHeader Content="User Name" Click="mivLoginSort_Click"/>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="columnPassword" Width="120" DisplayMemberBinding="{Binding Password}">
+                        <GridViewColumnHeader Content="Password" Click="mivPasswordSort_Click"/>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="columnLink" Width="50" DisplayMemberBinding="{Binding Link}">
+                        <GridViewColumnHeader Content="URL" Click="mivLinkSort_Click"/>
+                    </GridViewColumn>
                     <GridViewColumn x:Name="columnDescription" Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
                     <GridViewColumn x:Name="columnLastChanges" Header="Last Changes" Width="100" DisplayMemberBinding="{Binding DateAndTime}" />
                     <GridViewColumn x:Name="columnCategory" Header="Category" Width="100" DisplayMemberBinding="{Binding Category}" />
-                
+                    <GridViewColumn x:Name="columnCreationTime" Header="Creation Time" Width="100" DisplayMemberBinding="{Binding CreatedDateAndTime}" />
+                    <GridViewColumn x:Name="columnUID" Header="UID" Width="100" DisplayMemberBinding="{Binding UID}" />
+
                 </GridView>
-                
+
             </ListView.View>
 
         </ListView>
         <TextBox x:Name="tbEntryView" Grid.Row="3" TextWrapping="Wrap" Grid.ColumnSpan="3" AcceptsReturn="True" IsReadOnly="True" Visibility="Hidden"/>
+
 
     </Grid>
 </Controls:MetroWindow>

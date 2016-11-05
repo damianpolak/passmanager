@@ -10,7 +10,7 @@
     <Grid Background="#FFF3F3F3">
         <Label x:Name="label" Content="Enter your password, which will be used to encrypt database." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy" Content="(min 8 characters):" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="9.333"/>
-        <Button x:Name="tbGenerate" Content="Generate password" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="138"/>
+        <Button x:Name="tbGenerate" Content="Generate password" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="138" Click="tbGenerate_Click"/>
         <Button x:Name="btDone" Content="OK" HorizontalAlignment="Left" Margin="218,145,0,0" VerticalAlignment="Top" Width="75" Click="btDone_Click"/>
         <Button x:Name="btCancel" Content="Cancel" HorizontalAlignment="Left" Margin="304,145,0,0" VerticalAlignment="Top" Width="75" Click="btCancel_Click"/>
         <PasswordBox x:Name="tbPassword" HorizontalAlignment="Left" Margin="124,58,0,0" VerticalAlignment="Top" Width="255" PreviewKeyDown="tbPassword_PreviewKeyDown" PreviewTextInput="tbPassword_PreviewTextInput"/>

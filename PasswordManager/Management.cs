@@ -14,7 +14,6 @@ namespace PasswordManager
     {
         private Settings appSettings;
         public Variables appVariables;
-        public Logs appLogs;
         private bool bSettingsAvailable;
         public string sInputKey { get; set; }
 
@@ -22,7 +21,6 @@ namespace PasswordManager
         {
             appSettings = new Settings();
             appVariables = new Variables();
-            appLogs = new Logs();
             
             if (File.Exists(appVariables.sSettingsFilePath))
             {
@@ -39,7 +37,7 @@ namespace PasswordManager
                 catch(Exception ex)
                 {
                     bSettingsAvailable = false;
-                    appLogs.Message(ex.Message.ToString());
+                    Logs.Message(ex.Message.ToString());
                 }
             }
         }
@@ -79,7 +77,7 @@ namespace PasswordManager
             }
             catch (IOException e)
             {
-                appLogs.Message(e.Message);
+                Logs.Message(e.Message);
                 return null;
             }
         }
@@ -97,7 +95,7 @@ namespace PasswordManager
             }
             catch (IOException e)
             {
-                appLogs.Message(e.Message);
+                Logs.Message(e.Message);
             }
         }
 
@@ -113,7 +111,7 @@ namespace PasswordManager
             }
             catch(Exception ex)
             {
-                appLogs.Message(ex.Message);
+                Logs.Message(ex.Message);
             }
 
         }
@@ -131,7 +129,7 @@ namespace PasswordManager
             }
             catch(Exception ex)
             {
-                appLogs.Message(ex.Message + " [DESERIALIZATION ERROR]");
+                Logs.Message(ex.Message + " [DESERIALIZATION ERROR]");
                 return null;
             }
 
@@ -171,7 +169,7 @@ namespace PasswordManager
 
             if (!IsBase64String(cipherText))
             {
-                appLogs.Message("The cipherText input parameter is not base64 encoded");
+                Logs.Message("The cipherText input parameter is not base64 encoded");
                 return "FileIsCorrupt";
             }
                 
@@ -195,7 +193,7 @@ namespace PasswordManager
             }
             catch(Exception ex)
             {
-                appLogs.Message(ex.Message + "[KEY IS INVALID]");
+                Logs.Message(ex.Message + "[KEY IS INVALID]");
                 return "KeyIsInvalid";
             }
 
@@ -217,7 +215,18 @@ namespace PasswordManager
 
         }
 
-        public static bool ShowDialog(MainWindow mainWindow, string sTitle, string sBtnFirst, string sBtnSecond, string sLabel)
+        public static string GetMd5Hash(MD5 md5Hash, string input)
+        {
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
+        }
+
+        public static bool ShowDialog(MainWindowPart2 mainWindow, string sTitle, string sBtnFirst, string sBtnSecond, string sLabel)
         {
             MyOwnDialog dialog = new MyOwnDialog();
             dialog.Owner = mainWindow;

@@ -8,16 +8,16 @@ namespace PasswordManager
 {
     class Logs
     {
-        private string dateTimeFormat = "dd/MM/yy (H:mm:ss)";
+        private static string dateTimeFormat = "dd/MM/yy (H:mm:ss)";
 
-        private void WriteToFile(string msg)
+        private static void WriteToFile(string msg)
         {
             StreamWriter sw = new StreamWriter("errors.txt", true);
             sw.WriteLine(msg);
             sw.Close();
         }
 
-        public bool Message(string message)
+        public static bool Message(string message)
         {
             try
             {
